@@ -1,0 +1,13 @@
+shared/src/commonMain/kotlin/me/pm/marshall/ladd/mrshl/core.secrets/
+shared/src/commonMain/kotlin/me/pm/marshall/ladd/mrshl/core/secrets/
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
+/build
+*/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties

@@ -1,0 +1,31 @@
+CREATE TABLE puzzleEntity(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    answer TEXT NOT NULL,
+    guessString TEXT,
+    puzzleDate INTEGER NOT NULL,
+    completedDate INTEGER
+);
+
+getAllPuzzles:
+SELECT * FROM puzzleEntity
+ORDER BY id DESC;
+
+getPuzzleById:
+SELECT * FROM puzzleEntity
+WHERE id = ?;
+
+insertNewPuzzle:
+INSERT
+INTO puzzleEntity(
+    id,
+    answer,
+    guessString,
+    puzzleDate,
+    completedDate
+)
+VALUES (?,?,?,?,?);
+
+updatePuzzle:
+UPDATE puzzleEntity
+SET answer = :answer, guessString = :guessString, completedDate = :completedDate
+WHERE id = :id;

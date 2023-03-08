@@ -1,10 +1,9 @@
-# MRSHL_KMM
+# MRSHL KMM
 A Wordle "clone" for Android and iOS, built using Kotlin Mobile Multiplatform.
 
-Allows a user to play the entire backlog of Wordle puzzles.
+Allows a user to play the entire backlog of Wordle puzzles, and stores the User's progress.
 
-## Libraries Used
-
+## Technologies Used
 - KMM
 - sqlDelight
 - Ktor
@@ -13,3 +12,7 @@ Allows a user to play the entire backlog of Wordle puzzles.
 - Jetpack Compose
 - SwiftUI
 - Cocoapods
+
+## APIs Used
+- <https://rapidapi.com/Alejandro99aru/api/wordle-answers-solutions>
+- <https://wordsapiv1.p.rapidapi.com/words/>

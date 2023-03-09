@@ -11,14 +11,11 @@ import io.ktor.utils.io.errors.IOException
 import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.core.network.guessCheck.model.GuessCheckResponseDTO
-import me.pm.marshall.ladd.mrshl.core.network.utils.HttpResponseCodeValidator
-import me.pm.marshall.ladd.mrshl.core.network.utils.HttpResponseCodeValidatorImpl
 import me.pm.marshall.ladd.mrshl.core.secrets.Keys
 
 class GuessCheckInterfaceImpl(
     private val httpClient: HttpClient,
-) : GuessCheckInterface,
-    HttpResponseCodeValidator by HttpResponseCodeValidatorImpl() {
+) : GuessCheckInterface {
 
     companion object {
         const val BASE_URL = "https://wordsapiv1.p.rapidapi.com/words/"

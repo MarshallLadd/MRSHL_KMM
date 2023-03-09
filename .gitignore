@@ -11,3 +11,4 @@ shared/src/commonMain/kotlin/me/pm/marshall/ladd/mrshl/core/secrets/
 .externalNativeBuild
 .cxx
 local.properties
+/shared/src/commonMain/kotlin/me/pm/marshall/ladd/mrshl/core/network/Keys.kt

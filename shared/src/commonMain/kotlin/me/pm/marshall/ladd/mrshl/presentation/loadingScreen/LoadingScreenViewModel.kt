@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
+import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenEvent
@@ -32,11 +33,7 @@ class LoadingScreenViewModel(
     ).toMultiplatformStateFlow()
 
     init {
-//        cacheRemotePuzzles()
-        viewModelScope.launch(Dispatchers.Default) {
-            delay(2000)
-            onEvent(LoadingScreenEvent.EventsLoaded)
-        }
+        onEvent(LoadingScreenEvent.LoadingEvents)
     }
 
     fun onEvent(event: LoadingScreenEvent) {
@@ -49,35 +46,47 @@ class LoadingScreenViewModel(
 
             LoadingScreenEvent.EventsLoaded -> {
                 _state.update {
-                    it.copy(
+                    LoadingScreenState(
                         loadingComplete = true,
                         isLoading = false,
-                        error = null,
+                        error = null
                     )
                 }
             }
 
             is LoadingScreenEvent.FailedToGetEvents -> {
                 _state.update {
-                    it.copy(
-                        error = event.error,
+                    LoadingScreenState(
+                        loadingComplete = false,
                         isLoading = false,
+                        error = event.error
                     )
                 }
             }
 
             LoadingScreenEvent.LoadingEvents -> {
                 _state.update {
-                    it.copy(isLoading = true)
+                    LoadingScreenState(
+                        loadingComplete = false,
+                        isLoading = true,
+                        error = null
+                    )
                 }
+//                cacheRemotePuzzles()
+                simulateCacheRemotePuzzles()
             }
         }
     }
 
-    private fun cacheRemotePuzzles() {
-        if (state.value.isLoading) return
+    private fun simulateCacheRemotePuzzles() {
         viewModelScope.launch {
-            onEvent(LoadingScreenEvent.LoadingEvents)
+            delay(2000)
+            onEvent(LoadingScreenEvent.FailedToGetEvents(error = NetworkError.SERVER_ERROR))
+        }
+    }
+
+    private fun cacheRemotePuzzles() {
+        viewModelScope.launch {
             when (val result = cachePuzzles.execute()) {
                 is Result.Error -> {
                     onEvent(LoadingScreenEvent.FailedToGetEvents(error = (result.throwable as NetworkException).error))

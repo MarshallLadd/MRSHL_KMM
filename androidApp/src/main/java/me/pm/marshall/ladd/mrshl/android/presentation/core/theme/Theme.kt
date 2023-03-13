@@ -36,22 +36,20 @@ fun MrshlAppTheme(
 @Composable
 fun MrshlBaseComposable(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    navigationBarColor: Color = MaterialTheme.colors.background,
-    statusBarColor: Color = MaterialTheme.colors.background,
     content: @Composable () -> Unit
 ) {
     MrshlAppTheme(darkTheme = darkTheme) {
         val systemUiController = rememberSystemUiController()
         val useDarkIcons = MaterialTheme.colors.isLight
+        val navigationBarColor = Color.Transparent
+        val statusBarColor = Color.Transparent
+
         DisposableEffect(systemUiController, useDarkIcons) {
             systemUiController.setNavigationBarColor(color = navigationBarColor, darkIcons = useDarkIcons)
             systemUiController.setStatusBarColor(color = statusBarColor, darkIcons = useDarkIcons)
             onDispose { }
         }
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background,
-        ) {
+        Box {
             content()
         }
     }

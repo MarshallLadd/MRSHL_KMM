@@ -35,11 +35,12 @@ import me.pm.marshall.ladd.mrshl.Greeting
 import me.pm.marshall.ladd.mrshl.android.presentation.core.composables.PreviewDevices
 import me.pm.marshall.ladd.mrshl.android.presentation.core.composables.guessTile.GuessTile
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.MrshlBaseComposable
+import me.pm.marshall.ladd.mrshl.android.presentation.puzzleHistory.PuzzleHistoryScreen
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenEvent
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenState
 
-class LoadingSplashScreen : AndroidScreen() {
+object LoadingSplashScreen : AndroidScreen() {
 
     @Composable
     override fun Content() {
@@ -49,7 +50,7 @@ class LoadingSplashScreen : AndroidScreen() {
         LaunchedEffect(key1 = state.loadingComplete) {
             when (state.loadingComplete) {
                 true -> {
-                    navigator.replace(LoadingSplashScreen())
+                    navigator replace PuzzleHistoryScreen
                 }
 
                 false -> {
@@ -163,6 +164,6 @@ class LoadingSplashScreen : AndroidScreen() {
 @Composable
 fun LoadingSplashScreenPreview() {
     MrshlBaseComposable() {
-        Navigator(screen = LoadingSplashScreen())
+        Navigator(screen = LoadingSplashScreen)
     }
 }

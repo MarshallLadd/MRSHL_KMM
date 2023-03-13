@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MrshlBaseComposable {
-                Navigator(screen = LoadingSplashScreen()) {
+                Navigator(screen = LoadingSplashScreen) {
                     SlideTransition(navigator = it)
                 }
             }

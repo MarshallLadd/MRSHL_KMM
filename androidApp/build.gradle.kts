@@ -54,8 +54,7 @@ dependencies {
     implementation(Deps.composeMaterial)
     implementation("androidx.activity:activity-compose:$activityComposeVersion")
     implementation(Deps.composeIconsExtended)
-    implementation(Deps.composeNavigation)
-    implementation(Deps.coilCompose)
+//    implementation(Deps.coilCompose)
 
     implementation(Deps.hiltAndroid)
     kapt(Deps.hiltAndroidCompiler)

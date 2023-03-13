@@ -4,8 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AllAnswersNetworkDTO(
+data class AllPuzzlesNetworkDTO(
     @SerialName("day") val day: String,
     @SerialName("num") val id: String,
     @SerialName("answer") val answer: String,
 )
+

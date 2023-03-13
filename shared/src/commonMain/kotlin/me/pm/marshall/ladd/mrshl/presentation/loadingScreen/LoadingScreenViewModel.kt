@@ -33,7 +33,7 @@ class LoadingScreenViewModel(
     ).toMultiplatformStateFlow()
 
     init {
-        onEvent(LoadingScreenEvent.LoadingEvents)
+        onEvent(LoadingScreenEvent.LoadingPuzzles)
     }
 
     fun onEvent(event: LoadingScreenEvent) {
@@ -44,7 +44,7 @@ class LoadingScreenViewModel(
                 }
             }
 
-            LoadingScreenEvent.EventsLoaded -> {
+            LoadingScreenEvent.PuzzlesLoaded -> {
                 _state.update {
                     LoadingScreenState(
                         loadingComplete = true,
@@ -54,7 +54,7 @@ class LoadingScreenViewModel(
                 }
             }
 
-            is LoadingScreenEvent.FailedToGetEvents -> {
+            is LoadingScreenEvent.FailedToGetPuzzles -> {
                 _state.update {
                     LoadingScreenState(
                         loadingComplete = false,
@@ -64,7 +64,7 @@ class LoadingScreenViewModel(
                 }
             }
 
-            LoadingScreenEvent.LoadingEvents -> {
+            LoadingScreenEvent.LoadingPuzzles -> {
                 _state.update {
                     LoadingScreenState(
                         loadingComplete = false,
@@ -81,7 +81,7 @@ class LoadingScreenViewModel(
     private fun simulateCacheRemotePuzzles() {
         viewModelScope.launch {
             delay(2000)
-            onEvent(LoadingScreenEvent.FailedToGetEvents(error = NetworkError.SERVER_ERROR))
+            onEvent(LoadingScreenEvent.FailedToGetPuzzles(error = NetworkError.SERVER_ERROR))
         }
     }
 
@@ -89,11 +89,11 @@ class LoadingScreenViewModel(
         viewModelScope.launch {
             when (val result = cachePuzzles.execute()) {
                 is Result.Error -> {
-                    onEvent(LoadingScreenEvent.FailedToGetEvents(error = (result.throwable as NetworkException).error))
+                    onEvent(LoadingScreenEvent.FailedToGetPuzzles(error = (result.throwable as NetworkException).error))
                 }
 
                 is Result.Success -> {
-                    onEvent(LoadingScreenEvent.EventsLoaded)
+                    onEvent(LoadingScreenEvent.PuzzlesLoaded)
                 }
             }
         }

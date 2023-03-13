@@ -9,8 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +36,7 @@ import me.pm.marshall.ladd.mrshl.android.presentation.core.composables.PreviewDe
 import me.pm.marshall.ladd.mrshl.android.presentation.core.composables.guessTile.GuessTile
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.MrshlBaseComposable
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
+import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenEvent
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenState
 
 class LoadingSplashScreen : AndroidScreen() {
@@ -46,13 +51,50 @@ class LoadingSplashScreen : AndroidScreen() {
                 true -> {
                     navigator.replace(LoadingSplashScreen())
                 }
+
                 false -> {
                 }
             }
         }
         Scaffold { paddingValues ->
+            when (state.error) {
+                null -> {}
+                else -> {
+                    AlertDialog(
+                        title = {
+                            Text(text = "Loading Error", style = MaterialTheme.typography.h4)
+                        },
+                        text = {
+                            Column() {
+                                Text(
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    text = "An error has occurred loading new puzzles.",
+                                    style = MaterialTheme.typography.body1
+                                )
+                                Text(
+                                    text = "Error: ${state.error?.name}",
+                                    style = MaterialTheme.typography.subtitle2
+                                )
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = { viewModel.onEvent(LoadingScreenEvent.PuzzlesLoaded) }) {
+                                Text(text = "Continue")
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = { viewModel.onEvent(LoadingScreenEvent.LoadingPuzzles) }) {
+                                Text(text = "Retry")
+                            }
+                        },
+                        onDismissRequest = { viewModel.onEvent(LoadingScreenEvent.ErrorSeen) },
+                    )
+                }
+            }
             Column(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 verticalArrangement = Arrangement.Center
             ) {
                 Row(

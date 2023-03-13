@@ -2,6 +2,7 @@ package me.pm.marshall.ladd.mrshl.presentation.loadingScreen
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -31,7 +32,11 @@ class LoadingScreenViewModel(
     ).toMultiplatformStateFlow()
 
     init {
-        cacheRemotePuzzles()
+//        cacheRemotePuzzles()
+        viewModelScope.launch(Dispatchers.Default) {
+            delay(2000)
+            onEvent(LoadingScreenEvent.EventsLoaded)
+        }
     }
 
     fun onEvent(event: LoadingScreenEvent) {

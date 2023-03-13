@@ -5,7 +5,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
-import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllAnswersNetworkDTO
+import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryEntity
 import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
 
@@ -39,7 +39,7 @@ fun Puzzle.toPuzzleEntity(): PuzzleEntity {
     )
 }
 
-fun AllAnswersNetworkDTO.toPuzzleEntity(): PuzzleEntity {
+fun AllPuzzlesNetworkDTO.toPuzzleEntity(): PuzzleEntity {
     return PuzzleEntity(
         id = this.id.toLong(),
         answer = this.answer,
@@ -56,4 +56,8 @@ fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryEntity {
         puzzleDateString = Instant.fromEpochMilliseconds(this.puzzleDate).toLocalDateTime(TimeZone.UTC).toString(),
         completedDateString = this.completedDate?.let { Instant.fromEpochMilliseconds(this.completedDate).toLocalDateTime(TimeZone.UTC).toString() },
     )
+}
+
+fun Puzzle.toUIPuzzleHistoryEntity(): UIPuzzleHistoryEntity {
+    return this.toPuzzleEntity().toUIPuzzleHistoryEntity()
 }

@@ -4,6 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LatestAnswerNetworkDTO(
+data class LatestPuzzleNetworkDTO(
     @SerialName("today") val answer: String,
 )

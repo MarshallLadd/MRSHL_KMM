@@ -47,6 +47,7 @@ object LoadingSplashScreen : AndroidScreen() {
         val viewModel: AndroidLoadingScreenViewModel = getViewModel<AndroidLoadingScreenViewModel>()
         val state: LoadingScreenState by viewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
+
         LaunchedEffect(key1 = state.loadingComplete) {
             when (state.loadingComplete) {
                 true -> {

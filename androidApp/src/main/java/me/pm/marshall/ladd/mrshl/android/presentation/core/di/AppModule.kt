@@ -4,14 +4,18 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import me.pm.marshall.ladd.mrshl.android.BaseApplication
 import me.pm.marshall.ladd.mrshl.core.database.DatabaseDriverFactory
+import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.database.sqlDelight.PuzzleDatabaseSqlDelightImpl
 import me.pm.marshall.ladd.mrshl.core.network.HttpClientFactory
-import me.pm.marshall.ladd.mrshl.core.network.answers.AnswersApiKtorImpl
+import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiInterface
+import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiKtorImpl
 import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
+import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
 import javax.inject.Singleton
 
 @Module
@@ -20,7 +24,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesDatabaseImpl(database: MrshlDatabase): PuzzleDatabaseSqlDelightImpl {
+    fun providesBaseApplicationContext(): Context {
+        return BaseApplication.INSTANCE
+    }
+
+    @Provides
+    @Singleton
+    fun providesDatabaseOperations(database: MrshlDatabase): PuzzleDatabaseOperations {
         return PuzzleDatabaseSqlDelightImpl(database)
     }
 
@@ -32,19 +42,25 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesBaseApplication(): Context {
-        return BaseApplication.INSTANCE
-    }
-
-    @Provides
-    @Singleton
-    fun providesAnswersApi(client: HttpClient): AnswersApiKtorImpl {
-        return AnswersApiKtorImpl(client)
+    fun providesAnswersApi(client: HttpClient): PuzzlesApiInterface {
+        return PuzzlesApiKtorImpl(client)
     }
 
     @Provides
     @Singleton
     fun providesAnswersHttpClient(): HttpClient {
         return HttpClientFactory().create()
+    }
+
+    @Provides
+    @Singleton
+    fun providesCachePuzzlesFromRemoteUseCase(
+        answersApiKtorImpl: PuzzlesApiInterface,
+        database: PuzzleDatabaseOperations
+    ): CachePuzzlesFromRemote {
+        return CachePuzzlesFromRemote(
+            answersApiKtorImpl,
+            database
+        )
     }
 }

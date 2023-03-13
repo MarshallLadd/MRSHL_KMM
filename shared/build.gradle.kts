@@ -33,6 +33,7 @@ kotlin {
                 implementation(Deps.sqlDelightRuntime)
                 implementation(Deps.sqlDelightCoroutinesExtensions)
                 implementation(Deps.kotlinDateTime)
+                implementation("io.github.aakira:napier:2.6.1")
             }
         }
         val commonTest by getting {

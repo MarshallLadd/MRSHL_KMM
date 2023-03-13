@@ -1,5 +1,6 @@
 package me.pm.marshall.ladd.mrshl.core.network.answers
 
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -10,20 +11,21 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
-import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllAnswersNetworkDTO
-import me.pm.marshall.ladd.mrshl.core.network.answers.model.LatestAnswerNetworkDTO
+import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
+import me.pm.marshall.ladd.mrshl.core.network.answers.model.RemotePuzzleDataWrapper
+import me.pm.marshall.ladd.mrshl.core.network.answers.model.LatestPuzzleNetworkDTO
 import me.pm.marshall.ladd.mrshl.core.secrets.Keys
 
-class AnswersApiKtorImpl(
+class PuzzlesApiKtorImpl(
     private val httpClient: HttpClient,
-) : AnswersApiInterface {
+) : PuzzlesApiInterface {
 
     companion object {
         const val BASE_URL = "https://wordle-answers-solutions.p.rapidapi.com/"
         const val API_HOST_STRING = "wordle-answers-solutions.p.rapidapi.com"
     }
 
-    override suspend fun getLatestAnswer(): LatestAnswerNetworkDTO {
+    override suspend fun getLatestPuzzle(): LatestPuzzleNetworkDTO {
         val result = try {
             httpClient.get {
                 url(urlString = BASE_URL + "today")
@@ -43,13 +45,14 @@ class AnswersApiKtorImpl(
             else -> throw NetworkException(NetworkError.UNKNOWN_ERROR)
         }
         return try {
-            result.body<LatestAnswerNetworkDTO>()
+            result.body<LatestPuzzleNetworkDTO>()
         } catch (e: Exception) {
+            Napier.e(e.message ?: "", e)
             throw NetworkException(NetworkError.PARSING_ERROR)
         }
     }
 
-    override suspend fun getAllAnswers(): List<AllAnswersNetworkDTO> {
+    override suspend fun getAllPuzzles(): List<AllPuzzlesNetworkDTO> {
         val result = try {
             httpClient.get {
                 url(urlString = BASE_URL + "answers")
@@ -60,6 +63,7 @@ class AnswersApiKtorImpl(
                 contentType(ContentType.Application.Json)
             }
         } catch (e: IOException) {
+            Napier.e(e.message ?: "", e)
             throw Exception()
         }
         when (result.status.value) {
@@ -69,8 +73,9 @@ class AnswersApiKtorImpl(
             else -> throw NetworkException(NetworkError.UNKNOWN_ERROR)
         }
         return try {
-            result.body<List<AllAnswersNetworkDTO>>()
+            result.body<RemotePuzzleDataWrapper<AllPuzzlesNetworkDTO>>().data
         } catch (e: Exception) {
+            Napier.e(e.message ?: "", e)
             throw NetworkException(NetworkError.PARSING_ERROR)
         }
     }

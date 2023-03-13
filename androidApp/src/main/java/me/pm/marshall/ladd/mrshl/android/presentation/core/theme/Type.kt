@@ -104,6 +104,6 @@ val Typography.guessLetter: TextStyle
     get() = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 24.sp,
+        fontSize = 32.sp,
         letterSpacing = (0).sp
     )

@@ -99,7 +99,6 @@ fun GuessTile(
             Text(
                 text = letter?.toString()?.uppercase() ?: "",
                 modifier = Modifier
-                    .padding(16.dp)
                     .align(Alignment.Center),
                 style = MaterialTheme.typography.guessLetter.copy(color = letterColor)
             )

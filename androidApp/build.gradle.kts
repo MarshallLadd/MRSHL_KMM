@@ -44,6 +44,8 @@ android {
 dependencies {
     val composeVersion: String by project
     val activityComposeVersion: String by project
+    val voyagerVersion: String by project
+
     implementation(project(":shared"))
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation(Deps.composeUiTooling)
@@ -72,4 +74,15 @@ dependencies {
     androidTestImplementation(Deps.hiltTesting)
 
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc")
+
+
+    // Navigator
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+    // Transitions
+    implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+    // Android ViewModel integration
+    implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
+    // Hilt integration
+    implementation("cafe.adriel.voyager:voyager-hilt:$voyagerVersion")
+
 }

@@ -70,4 +70,6 @@ dependencies {
 
     kaptAndroidTest(Deps.hiltAndroidCompiler)
     androidTestImplementation(Deps.hiltTesting)
+
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc")
 }

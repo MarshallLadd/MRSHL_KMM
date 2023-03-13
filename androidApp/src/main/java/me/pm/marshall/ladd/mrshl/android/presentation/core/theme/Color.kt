@@ -1,4 +1,4 @@
-package me.pm.marshall.ladd.mrshl.android.presentation.theme
+package me.pm.marshall.ladd.mrshl.android.presentation.core.theme
 
 import androidx.compose.material.Colors
 import androidx.compose.material.darkColors
@@ -52,3 +52,7 @@ val Colors.badLetterBackground: Color
 @get:Composable
 val Colors.onLetterGuess: Color
     get() = Color(MrshlColors.White)
+
+@get:Composable
+val Colors.unsubmittedGuessBorder: Color
+    get() = if (isLight) Color(MrshlColors.LightBorderEmpty) else Color(MrshlColors.DarkBorderEmpty)

@@ -2,7 +2,7 @@ package me.pm.marshall.ladd.mrshl.domain.useCases
 
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.database.sqlDelight.PuzzleDatabaseSqlDelightImpl
-import me.pm.marshall.ladd.mrshl.domain.model.toPuzzleEntity
+import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleEntity
 import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
 
 class UpdatePuzzleInCache(

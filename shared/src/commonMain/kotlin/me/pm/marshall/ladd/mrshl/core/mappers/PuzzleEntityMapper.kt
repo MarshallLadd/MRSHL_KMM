@@ -1,4 +1,4 @@
-package me.pm.marshall.ladd.mrshl.domain.model
+package me.pm.marshall.ladd.mrshl.core.mappers
 
 import database.PuzzleEntity
 import kotlinx.datetime.Instant
@@ -8,6 +8,8 @@ import kotlinx.datetime.toLocalDateTime
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryEntity
 import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
+
+// PuzzleEntity is the sqlDelight generated class for the DB
 
 fun PuzzleEntity.toPuzzleEntry(): Puzzle {
     return Puzzle(

@@ -9,4 +9,3 @@ data class AllPuzzlesNetworkDTO(
     @SerialName("num") val id: String,
     @SerialName("answer") val answer: String,
 )
-

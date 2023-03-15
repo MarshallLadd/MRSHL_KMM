@@ -6,8 +6,11 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.request.url
+import io.ktor.client.utils.EmptyContent.contentType
+import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.utils.io.core.use
 import io.ktor.utils.io.errors.IOException
 import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
@@ -54,13 +57,15 @@ class PuzzlesApiKtorImpl(
 
     override suspend fun getAllPuzzles(): List<AllPuzzlesNetworkDTO> {
         val result = try {
-            httpClient.get {
-                url(urlString = BASE_URL + "answers")
-                headers {
-                    append("X-RapidAPI-Key", Keys.ANSWERS_API_KEY)
-                    append("X-RapidAPI-Host", API_HOST_STRING)
+            httpClient.use {
+                it.get {
+                    url(urlString = BASE_URL + "answers")
+                    headers {
+                        append("X-RapidAPI-Key", Keys.ANSWERS_API_KEY)
+                        append("X-RapidAPI-Host", API_HOST_STRING)
+                    }
+                    contentType(ContentType.Application.Json)
                 }
-                contentType(ContentType.Application.Json)
             }
         } catch (e: IOException) {
             Napier.e(e.message ?: "", e)

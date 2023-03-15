@@ -5,6 +5,7 @@
 
     <application
         android:name=".BaseApplication"
+        android:label="MRSHL"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

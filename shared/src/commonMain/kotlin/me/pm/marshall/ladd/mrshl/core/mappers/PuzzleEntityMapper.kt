@@ -55,8 +55,8 @@ fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryEntity {
     return UIPuzzleHistoryEntity(
         id = this.id,
         guessList = this.guessString?.split(',') ?: emptyList(),
-        puzzleDateString = Instant.fromEpochMilliseconds(this.puzzleDate).toLocalDateTime(TimeZone.UTC).toString(),
-        completedDateString = this.completedDate?.let { Instant.fromEpochMilliseconds(this.completedDate).toLocalDateTime(TimeZone.UTC).toString() },
+        puzzleDateString = Instant.fromEpochMilliseconds(this.puzzleDate).toLocalDateTime(TimeZone.UTC).date.toString(),
+        completedDateString = this.completedDate?.let { Instant.fromEpochMilliseconds(this.completedDate).toLocalDateTime(TimeZone.UTC).date.toString() },
     )
 }
 

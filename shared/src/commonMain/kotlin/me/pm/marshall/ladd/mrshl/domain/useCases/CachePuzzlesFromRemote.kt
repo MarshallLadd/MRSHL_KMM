@@ -7,17 +7,17 @@ import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiInterface
 import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleEntity
 
 class CachePuzzlesFromRemote(
-    private val answersClient: PuzzlesApiInterface,
+    private val puzzleClient: PuzzlesApiInterface,
     private val databaseOperations: PuzzleDatabaseOperations,
 ) {
 
     suspend fun execute(): Result<Unit> {
         return try {
-            val allRemoteAnswers = answersClient.getAllPuzzles().sortedByDescending { it.id }
-
-            (databaseOperations.getAllPuzzlesAsList().size..allRemoteAnswers.lastIndex)
-                .forEach { index ->
-                    databaseOperations.insertNewPuzzle(allRemoteAnswers[index].toPuzzleEntity())
+            puzzleClient
+                .getAllPuzzles()
+                .filter { it.id.toInt() > databaseOperations.getAllPuzzlesAsList().lastIndex }
+                .forEach {
+                    databaseOperations.insertNewPuzzle(it.toPuzzleEntity())
                 }
 
             Result.Success(Unit)

@@ -15,7 +15,7 @@ SELECT * FROM puzzleEntity
 WHERE id = ?;
 
 insertNewPuzzle:
-INSERT
+INSERT OR IGNORE
 INTO puzzleEntity(
     id,
     answer,

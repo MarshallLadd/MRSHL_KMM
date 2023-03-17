@@ -6,7 +6,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
-import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryEntity
+import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryItem
 import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
 
 // PuzzleEntity is the sqlDelight generated class for the DB
@@ -51,15 +51,15 @@ fun AllPuzzlesNetworkDTO.toPuzzleEntity(): PuzzleEntity {
     )
 }
 
-fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryEntity {
-    return UIPuzzleHistoryEntity(
+fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryItem {
+    return UIPuzzleHistoryItem(
         id = this.id,
-        guessList = this.guessString?.split(',') ?: emptyList(),
+//        guessList = this.guessString?.split(',') ?: emptyList(),
         puzzleDateString = Instant.fromEpochMilliseconds(this.puzzleDate).toLocalDateTime(TimeZone.UTC).date.toString(),
         completedDateString = this.completedDate?.let { Instant.fromEpochMilliseconds(this.completedDate).toLocalDateTime(TimeZone.UTC).date.toString() },
     )
 }
 
-fun Puzzle.toUIPuzzleHistoryEntity(): UIPuzzleHistoryEntity {
+fun Puzzle.toUIPuzzleHistoryEntity(): UIPuzzleHistoryItem {
     return this.toPuzzleEntity().toUIPuzzleHistoryEntity()
 }

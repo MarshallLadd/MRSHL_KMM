@@ -3,6 +3,7 @@ package me.pm.marshall.ladd.mrshl.android.presentation.puzzleHistory.composables
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -33,66 +34,102 @@ fun PuzzleHistoryItem(
     borderStroke: BorderStroke,
     backgroundColor: Color,
     textColor: Color,
-    puzzleHistory: UIPuzzleHistoryItem
+    puzzleHistory: UIPuzzleHistoryItem,
+    onClick: (Int) -> Unit
 ) {
     Column(
         modifier = modifier
             .border(borderStroke)
             .background(color = backgroundColor)
-            .padding(4.dp),
+//            .padding(4.dp)
+            .clickable {
+                onClick(puzzleHistory.id)
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
+            modifier = Modifier.padding(top = 4.dp),
             text = "${puzzleHistory.id}",
             style = MaterialTheme.typography.h6.copy(color = textColor),
             textAlign = TextAlign.Center
         )
-        val modifier = Modifier.padding(horizontal = 1.dp)
-        Row(modifier = Modifier
-            .wrapContentSize()
-            .padding(2.dp)) {
+        val tileModifier = Modifier.padding(horizontal = 1.dp)
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(2.dp)
+        ) {
             (0..4).forEach {
-                PuzzleHistoryGuessTile(modifier = modifier, tileState = puzzleHistory.guessList[it])
+                PuzzleHistoryGuessTile(
+                    modifier = tileModifier,
+                    tileState = puzzleHistory.guessList[it]
+                )
             }
         }
-        Row(modifier = Modifier
-            .wrapContentSize()
-            .padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(2.dp)
+        ) {
             (5..9).forEach {
-                PuzzleHistoryGuessTile(modifier = modifier, tileState = puzzleHistory.guessList[it])
+                PuzzleHistoryGuessTile(
+                    modifier = tileModifier,
+                    tileState = puzzleHistory.guessList[it]
+                )
             }
         }
-        Row(modifier = Modifier
-            .wrapContentSize()
-            .padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(2.dp)
+        ) {
             (10..14).forEach {
-                PuzzleHistoryGuessTile(modifier = modifier, tileState = puzzleHistory.guessList[it])
+                PuzzleHistoryGuessTile(
+                    modifier = tileModifier,
+                    tileState = puzzleHistory.guessList[it]
+                )
             }
         }
-        Row(modifier = Modifier
-            .wrapContentSize()
-            .padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(2.dp)
+        ) {
             (15..19).forEach {
-                PuzzleHistoryGuessTile(modifier = modifier, tileState = puzzleHistory.guessList[it])
+                PuzzleHistoryGuessTile(
+                    modifier = tileModifier,
+                    tileState = puzzleHistory.guessList[it]
+                )
             }
         }
-        Row(modifier = Modifier
-            .wrapContentSize()
-            .padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(2.dp)
+        ) {
             (20..24).forEach {
-                PuzzleHistoryGuessTile(modifier = modifier, tileState = puzzleHistory.guessList[it])
+                PuzzleHistoryGuessTile(
+                    modifier = tileModifier,
+                    tileState = puzzleHistory.guessList[it]
+                )
             }
         }
-        Row(modifier = Modifier
-            .wrapContentSize()
-            .padding(2.dp)) {
+        Row(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(2.dp)
+        ) {
             (25..29).forEach {
-                PuzzleHistoryGuessTile(modifier = modifier, tileState = puzzleHistory.guessList[it])
+                PuzzleHistoryGuessTile(
+                    modifier = tileModifier,
+                    tileState = puzzleHistory.guessList[it]
+                )
             }
         }
         Text(
+            modifier = Modifier.padding(bottom = 4.dp),
             text = puzzleHistory.puzzleDateString,
-            style = MaterialTheme.typography.subtitle1.copy(color = textColor),
+            style = MaterialTheme.typography.caption.copy(color = textColor),
             textAlign = TextAlign.Center
         )
     }
@@ -101,7 +138,7 @@ fun PuzzleHistoryItem(
 @PreviewDevices
 @Composable
 fun PuzzleHistoryItemPreviews() {
-    MrshlBaseComposable() {
+    MrshlBaseComposable {
         PuzzleHistoryItem(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             borderStroke = BorderStroke(
@@ -125,7 +162,10 @@ fun PuzzleHistoryItemPreviews() {
                 },
                 puzzleDateString = "2021-12-18",
                 completedDateString = null
-            )
+            ),
+            onClick = {
+
+            }
         )
     }
 }

@@ -67,7 +67,7 @@ object LoadingSplashScreen : AndroidScreen() {
                             Text(text = "Loading Error", style = MaterialTheme.typography.h4)
                         },
                         text = {
-                            Column() {
+                            Column {
                                 Text(
                                     modifier = Modifier.padding(bottom = 8.dp),
                                     text = "An error has occurred loading new puzzles.",
@@ -164,7 +164,7 @@ object LoadingSplashScreen : AndroidScreen() {
 @PreviewDevices
 @Composable
 fun LoadingSplashScreenPreview() {
-    MrshlBaseComposable() {
+    MrshlBaseComposable {
         Navigator(screen = LoadingSplashScreen)
     }
 }

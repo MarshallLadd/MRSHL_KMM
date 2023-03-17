@@ -49,7 +49,7 @@ object PuzzleHistoryScreen : AndroidScreen() {
         val state: PuzzleHistoryState by viewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
         val scrollState = rememberLazyGridState()
-        Scaffold() {
+        Scaffold {
             LazyVerticalGrid(
                 modifier = Modifier
                     .padding(it)
@@ -71,7 +71,10 @@ object PuzzleHistoryScreen : AndroidScreen() {
                         ),
                         backgroundColor = MaterialTheme.colors.surface,
                         textColor = MaterialTheme.colors.onSurface,
-                        puzzleHistory = uiPuzzleHistoryItem
+                        puzzleHistory = uiPuzzleHistoryItem,
+                        onClick = {
+
+                        }
                     )
                 }
                 item(span = {

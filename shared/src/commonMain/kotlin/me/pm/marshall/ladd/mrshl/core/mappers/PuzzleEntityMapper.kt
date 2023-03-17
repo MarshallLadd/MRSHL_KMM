@@ -53,7 +53,7 @@ fun AllPuzzlesNetworkDTO.toPuzzleEntity(): PuzzleEntity {
 
 fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryItem {
     return UIPuzzleHistoryItem(
-        id = this.id,
+        id = this.id.toInt(),
 //        guessList = this.guessString?.split(',') ?: emptyList(),
         puzzleDateString = Instant.fromEpochMilliseconds(this.puzzleDate).toLocalDateTime(TimeZone.UTC).date.toString(),
         completedDateString = this.completedDate?.let { Instant.fromEpochMilliseconds(this.completedDate).toLocalDateTime(TimeZone.UTC).date.toString() },

@@ -105,7 +105,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				CFE63486DD9BF141DB5A08EC /* Frameworks */,
-				30414EA8EF0E3B7E83DA405D /* [CP] Embed Pods Frameworks */,
+				8C99D3F209E8E6B85DFBDDA3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,9 +199,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignPodAppleFrameworkForXcode\n";
 		};
-		30414EA8EF0E3B7E83DA405D /* [CP] Embed Pods Frameworks */ = {
+		8C99D3F209E8E6B85DFBDDA3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

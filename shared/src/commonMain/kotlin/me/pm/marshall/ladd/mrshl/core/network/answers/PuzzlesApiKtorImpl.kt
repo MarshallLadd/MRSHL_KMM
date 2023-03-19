@@ -6,8 +6,6 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.request.url
-import io.ktor.client.utils.EmptyContent.contentType
-import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.utils.io.core.use
@@ -17,7 +15,7 @@ import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.RemotePuzzleDataWrapper
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.LatestPuzzleNetworkDTO
-import me.pm.marshall.ladd.mrshl.core.secrets.Keys
+import me.pm.marshall.ladd.mrshl.core.network.Keys
 
 class PuzzlesApiKtorImpl(
     private val httpClient: HttpClient,

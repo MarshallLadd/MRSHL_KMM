@@ -2,7 +2,7 @@ package me.pm.marshall.ladd.mrshl.core.database
 
 import database.PuzzleEntity
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformFlow
-import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
+import me.pm.marshall.ladd.mrshl.presentation.core.Puzzle
 
 interface PuzzleDatabaseOperations {
     fun getAllPuzzlesAsFlow(): MultiplatformFlow<List<Puzzle>>

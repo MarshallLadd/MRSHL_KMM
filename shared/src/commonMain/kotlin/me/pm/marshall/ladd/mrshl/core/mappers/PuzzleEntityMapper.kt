@@ -7,7 +7,7 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryItem
-import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
+import me.pm.marshall.ladd.mrshl.presentation.core.Puzzle
 
 // PuzzleEntity is the sqlDelight generated class for the DB
 

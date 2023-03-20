@@ -9,7 +9,7 @@ import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformFlow
 import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
 import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleEntry
-import me.pm.marshall.ladd.mrshl.presentation.puzzleScreen.Puzzle
+import me.pm.marshall.ladd.mrshl.presentation.core.Puzzle
 
 class PuzzleDatabaseSqlDelightImpl(
     database: MrshlDatabase,

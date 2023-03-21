@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCache
 import me.pm.marshall.ladd.mrshl.domain.useCases.ValidateGuess
+import me.pm.marshall.ladd.mrshl.presentation.core.PuzzleForPlay
 import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleState
 
 class PlayPuzzleViewModel(
@@ -18,7 +19,13 @@ class PlayPuzzleViewModel(
 
     private val _state = MutableStateFlow(
         value = PlayPuzzleState(
-
+            puzzle = PuzzleForPlay(
+                id = puzzleId,
+                answer = "MRSHL",
+                guessList = emptyList(),
+                puzzleDateString = "",
+                completedDateString = null
+            )
         )
     )
 }

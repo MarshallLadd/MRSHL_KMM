@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import me.pm.marshall.ladd.mrshl.android.presentation.core.composables.PreviewDevices
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.MrshlBaseComposable
@@ -32,51 +30,51 @@ import me.pm.marshall.ladd.mrshl.presentation.core.TileState
 @Composable
 fun GuessTile(
     modifier: Modifier = Modifier,
-    tileState: TileState
+    tileState: TileState,
 ) {
     when (tileState) {
         is TileState.BadGuess -> GuessTile(
             modifier = modifier,
             borderStroke = BorderStroke(
                 width = 0.dp,
-                color = Color.Transparent
+                color = Color.Transparent,
             ),
             backgroundColor = MaterialTheme.colors.badLetterBackground,
             letterColor = MaterialTheme.colors.onLetterGuess,
-            letter = tileState.letter
+            letter = tileState.letter,
         )
 
         is TileState.GoodGuess -> GuessTile(
             modifier = modifier,
             borderStroke = BorderStroke(
                 width = 0.dp,
-                color = Color.Transparent
+                color = Color.Transparent,
             ),
             backgroundColor = MaterialTheme.colors.goodLetterGoodPlaceBackground,
             letterColor = MaterialTheme.colors.onLetterGuess,
-            letter = tileState.letter
+            letter = tileState.letter,
         )
 
         is TileState.UnsubmittedGuess -> GuessTile(
             modifier = modifier,
             borderStroke = BorderStroke(
                 width = 2.dp,
-                color = MaterialTheme.colors.unsubmittedGuessBorder
+                color = MaterialTheme.colors.unsubmittedGuessBorder,
             ),
             backgroundColor = MaterialTheme.colors.surface,
             letterColor = MaterialTheme.colors.onSurface,
-            letter = tileState.letter
+            letter = tileState.letter,
         )
 
         is TileState.WrongLocationGuess -> GuessTile(
             modifier = modifier,
             borderStroke = BorderStroke(
                 width = 0.dp,
-                color = Color.Transparent
+                color = Color.Transparent,
             ),
             backgroundColor = MaterialTheme.colors.goodLetterBadPlaceBackground,
             letterColor = MaterialTheme.colors.onLetterGuess,
-            letter = tileState.letter
+            letter = tileState.letter,
         )
     }
 }
@@ -87,20 +85,20 @@ fun GuessTile(
     borderStroke: BorderStroke,
     backgroundColor: Color,
     letterColor: Color,
-    letter: Char? = null
+    letter: Char? = null,
 ) {
     Box(modifier = modifier) {
         Box(
             modifier = Modifier
                 .border(borderStroke)
                 .size(64.dp)
-                .background(color = backgroundColor)
+                .background(color = backgroundColor),
         ) {
             Text(
                 text = letter?.toString()?.uppercase() ?: "",
                 modifier = Modifier
                     .align(Alignment.Center),
-                style = MaterialTheme.typography.guessLetter.copy(color = letterColor)
+                style = MaterialTheme.typography.guessLetter.copy(color = letterColor),
             )
         }
     }
@@ -115,28 +113,28 @@ fun GuessTilePreview() {
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .background(color = MaterialTheme.colors.background),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             val modifier = Modifier.padding(4.dp)
             GuessTile(
                 modifier = modifier,
-                tileState = TileState.UnsubmittedGuess('M')
+                tileState = TileState.UnsubmittedGuess('M'),
             )
             GuessTile(
                 modifier = modifier,
-                tileState = TileState.GoodGuess('R')
+                tileState = TileState.GoodGuess('R'),
             )
             GuessTile(
                 modifier = modifier,
-                tileState = TileState.WrongLocationGuess('S')
+                tileState = TileState.WrongLocationGuess('S'),
             )
             GuessTile(
                 modifier = modifier,
-                tileState = TileState.BadGuess('H')
+                tileState = TileState.BadGuess('H'),
             )
             GuessTile(
                 modifier = modifier,
-                tileState = TileState.UnsubmittedGuess(null)
+                tileState = TileState.UnsubmittedGuess(null),
             )
         }
     }

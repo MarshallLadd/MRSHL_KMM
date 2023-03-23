@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AndroidPuzzleHistoryViewModel @Inject constructor(
     private val databaseOperations: PuzzleDatabaseOperations,
-    private val cachePuzzles: CachePuzzlesFromRemote
+    private val cachePuzzles: CachePuzzlesFromRemote,
 ) : ViewModel() {
 
     private val viewModel by lazy {

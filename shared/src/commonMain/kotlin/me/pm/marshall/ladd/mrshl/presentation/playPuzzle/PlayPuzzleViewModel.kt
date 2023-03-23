@@ -12,7 +12,7 @@ class PlayPuzzleViewModel(
     private val puzzleId: Long,
     private val validateGuess: ValidateGuess,
     private val updatePuzzleInCache: UpdatePuzzleInCache,
-    private val coroutineScope: CoroutineScope
+    private val coroutineScope: CoroutineScope,
 ) {
 
     private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
@@ -24,8 +24,8 @@ class PlayPuzzleViewModel(
                 answer = "MRSHL",
                 guessList = emptyList(),
                 puzzleDateString = "",
-                completedDateString = null
-            )
-        )
+                completedDateString = null,
+            ),
+        ),
     )
 }

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemotePuzzleDataWrapper<T>(
-    @SerialName("data") val data: List<T>
+    @SerialName("data") val data: List<T>,
 )

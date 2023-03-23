@@ -11,7 +11,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun MrshlAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) {
         darkColorPalette
@@ -23,14 +23,14 @@ fun MrshlAppTheme(
         colors = colors,
         typography = typography,
         shapes = shapes,
-        content = content
+        content = content,
     )
 }
 
 @Composable
 fun MrshlBaseComposable(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     MrshlAppTheme(darkTheme = darkTheme) {
         val systemUiController = rememberSystemUiController()

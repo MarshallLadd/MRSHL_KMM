@@ -74,7 +74,6 @@ dependencies {
 
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc")
 
-
     // Navigator
     implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
     // Transitions
@@ -83,5 +82,4 @@ dependencies {
     implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
     // Hilt integration
     implementation("cafe.adriel.voyager:voyager-hilt:$voyagerVersion")
-
 }

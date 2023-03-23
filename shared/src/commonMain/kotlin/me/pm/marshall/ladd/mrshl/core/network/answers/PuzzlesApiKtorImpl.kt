@@ -10,12 +10,12 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.utils.io.core.use
 import io.ktor.utils.io.errors.IOException
+import me.pm.marshall.ladd.mrshl.core.network.Keys
 import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
-import me.pm.marshall.ladd.mrshl.core.network.answers.model.RemotePuzzleDataWrapper
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.LatestPuzzleNetworkDTO
-import me.pm.marshall.ladd.mrshl.core.network.Keys
+import me.pm.marshall.ladd.mrshl.core.network.answers.model.RemotePuzzleDataWrapper
 
 class PuzzlesApiKtorImpl(
     private val httpClient: HttpClient,

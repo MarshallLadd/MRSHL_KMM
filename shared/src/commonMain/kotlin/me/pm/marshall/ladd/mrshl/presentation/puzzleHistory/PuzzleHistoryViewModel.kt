@@ -19,7 +19,7 @@ import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryS
 class PuzzleHistoryViewModel(
     private val databaseOperations: PuzzleDatabaseOperations,
     private val cachePuzzles: CachePuzzlesFromRemote,
-    private val coroutineScope: CoroutineScope?
+    private val coroutineScope: CoroutineScope?,
 ) {
 
     private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
@@ -28,16 +28,22 @@ class PuzzleHistoryViewModel(
     val state = combine(_state, databaseOperations.getAllPuzzlesAsFlow()) { state, puzzleList ->
         if (state.puzzleHistoryList != puzzleList) {
             state.copy(
-                puzzleHistoryList = puzzleList.map { it.toUIPuzzleHistoryEntity() }
+                puzzleHistoryList = puzzleList.map { it.toUIPuzzleHistoryEntity() },
             )
-        } else state
+        } else {
+            state
+        }
     }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PuzzleHistoryState())
         .toMultiplatformStateFlow()
 
     fun onEvent(event: PuzzleHistoryEvent) {
         when (event) {
-            is PuzzleHistoryEvent.ChoosePuzzle -> TODO()
+            is PuzzleHistoryEvent.ChoosePuzzle -> {
+                _state.update {
+                    it.copy(selectedPuzzleId = event.puzzleId)
+                }
+            }
             PuzzleHistoryEvent.ErrorSeen -> TODO()
             PuzzleHistoryEvent.ForceUpdateFromRemote -> {
                 viewModelScope.launch {
@@ -60,6 +66,12 @@ class PuzzleHistoryViewModel(
 
             is PuzzleHistoryEvent.UpdateListFilter -> {
                 _state.update { it.copy(listFilterOption = event.listFilterOption) }
+            }
+
+            PuzzleHistoryEvent.NavigatingToPuzzle -> {
+                _state.update {
+                    it.copy(selectedPuzzleId = null)
+                }
             }
         }
     }

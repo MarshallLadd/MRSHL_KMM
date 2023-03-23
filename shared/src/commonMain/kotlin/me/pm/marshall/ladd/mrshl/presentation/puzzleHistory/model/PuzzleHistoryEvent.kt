@@ -2,6 +2,7 @@ package me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model
 
 sealed class PuzzleHistoryEvent {
     data class ChoosePuzzle(val puzzleId: Long) : PuzzleHistoryEvent()
+    object NavigatingToPuzzle : PuzzleHistoryEvent()
     object ForceUpdateFromRemote : PuzzleHistoryEvent()
     object ScrollToTop : PuzzleHistoryEvent()
     object FlipListDirection : PuzzleHistoryEvent()

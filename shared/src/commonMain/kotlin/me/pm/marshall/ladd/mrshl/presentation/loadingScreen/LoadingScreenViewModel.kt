@@ -49,7 +49,7 @@ class LoadingScreenViewModel(
                     LoadingScreenState(
                         loadingComplete = true,
                         isLoading = false,
-                        error = null
+                        error = null,
                     )
                 }
             }
@@ -59,7 +59,7 @@ class LoadingScreenViewModel(
                     LoadingScreenState(
                         loadingComplete = false,
                         isLoading = false,
-                        error = event.error
+                        error = event.error,
                     )
                 }
             }
@@ -69,7 +69,7 @@ class LoadingScreenViewModel(
                     LoadingScreenState(
                         loadingComplete = false,
                         isLoading = true,
-                        error = null
+                        error = null,
                     )
                 }
                 cacheRemotePuzzles()

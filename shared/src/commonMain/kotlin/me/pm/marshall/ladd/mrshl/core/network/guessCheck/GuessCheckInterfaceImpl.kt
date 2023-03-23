@@ -8,10 +8,10 @@ import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
+import me.pm.marshall.ladd.mrshl.core.network.Keys
 import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.core.network.guessCheck.model.GuessCheckResponseDTO
-import me.pm.marshall.ladd.mrshl.core.network.Keys
 
 class GuessCheckInterfaceImpl(
     private val httpClient: HttpClient,

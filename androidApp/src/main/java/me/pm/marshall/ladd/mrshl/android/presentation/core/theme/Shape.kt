@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
 val shapes = Shapes(
-    small = RoundedCornerShape(0.dp)
+    small = RoundedCornerShape(0.dp),
 )
 
 @get:Composable

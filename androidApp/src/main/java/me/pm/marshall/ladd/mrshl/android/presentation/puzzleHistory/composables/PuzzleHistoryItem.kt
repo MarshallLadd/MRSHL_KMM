@@ -4,14 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -23,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.pm.marshall.ladd.mrshl.android.presentation.core.composables.PreviewDevices
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.MrshlBaseComposable
-import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.guessLetter
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.unsubmittedGuessBorder
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryItem
@@ -35,7 +29,7 @@ fun PuzzleHistoryItem(
     backgroundColor: Color,
     textColor: Color,
     puzzleHistory: UIPuzzleHistoryItem,
-    onClick: (Int) -> Unit
+    onClick: (Long) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -43,86 +37,86 @@ fun PuzzleHistoryItem(
             .background(color = backgroundColor)
 //            .padding(4.dp)
             .clickable {
-                onClick(puzzleHistory.id)
+                onClick(puzzleHistory.id.toLong())
             },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             modifier = Modifier.padding(top = 4.dp),
             text = "${puzzleHistory.id}",
             style = MaterialTheme.typography.h6.copy(color = textColor),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         val tileModifier = Modifier.padding(horizontal = 1.dp)
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(2.dp)
+                .padding(2.dp),
         ) {
             (0..4).forEach {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it]
+                    tileState = puzzleHistory.guessList[it],
                 )
             }
         }
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(2.dp)
+                .padding(2.dp),
         ) {
             (5..9).forEach {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it]
+                    tileState = puzzleHistory.guessList[it],
                 )
             }
         }
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(2.dp)
+                .padding(2.dp),
         ) {
             (10..14).forEach {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it]
+                    tileState = puzzleHistory.guessList[it],
                 )
             }
         }
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(2.dp)
+                .padding(2.dp),
         ) {
             (15..19).forEach {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it]
+                    tileState = puzzleHistory.guessList[it],
                 )
             }
         }
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(2.dp)
+                .padding(2.dp),
         ) {
             (20..24).forEach {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it]
+                    tileState = puzzleHistory.guessList[it],
                 )
             }
         }
         Row(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(2.dp)
+                .padding(2.dp),
         ) {
             (25..29).forEach {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it]
+                    tileState = puzzleHistory.guessList[it],
                 )
             }
         }
@@ -130,7 +124,7 @@ fun PuzzleHistoryItem(
             modifier = Modifier.padding(bottom = 4.dp),
             text = puzzleHistory.puzzleDateString,
             style = MaterialTheme.typography.caption.copy(color = textColor),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -143,7 +137,7 @@ fun PuzzleHistoryItemPreviews() {
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             borderStroke = BorderStroke(
                 width = 2.dp,
-                color = MaterialTheme.colors.unsubmittedGuessBorder
+                color = MaterialTheme.colors.unsubmittedGuessBorder,
             ),
             backgroundColor = MaterialTheme.colors.surface,
             textColor = MaterialTheme.colors.onSurface,
@@ -161,11 +155,10 @@ fun PuzzleHistoryItemPreviews() {
                     }
                 },
                 puzzleDateString = "2021-12-18",
-                completedDateString = null
+                completedDateString = null,
             ),
             onClick = {
-
-            }
+            },
         )
     }
 }

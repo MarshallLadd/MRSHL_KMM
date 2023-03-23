@@ -4,7 +4,6 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import me.pm.marshall.ladd.mrshl.android.BaseApplication
@@ -56,11 +55,11 @@ object AppModule {
     @Singleton
     fun providesCachePuzzlesFromRemoteUseCase(
         answersApiKtorImpl: PuzzlesApiInterface,
-        database: PuzzleDatabaseOperations
+        database: PuzzleDatabaseOperations,
     ): CachePuzzlesFromRemote {
         return CachePuzzlesFromRemote(
             answersApiKtorImpl,
-            database
+            database,
         )
     }
 }

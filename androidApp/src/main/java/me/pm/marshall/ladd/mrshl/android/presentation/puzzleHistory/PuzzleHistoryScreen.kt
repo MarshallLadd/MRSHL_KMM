@@ -34,7 +34,6 @@ import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.unsubmittedGues
 import me.pm.marshall.ladd.mrshl.android.presentation.playPuzzle.PlayPuzzleScreen
 import me.pm.marshall.ladd.mrshl.android.presentation.puzzleHistory.composables.HistoryScreenBottomNavBar
 import me.pm.marshall.ladd.mrshl.android.presentation.puzzleHistory.composables.PuzzleHistoryItem
-import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.ListSortDirection
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryEvent
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryState
 
@@ -86,13 +85,7 @@ object PuzzleHistoryScreen : AndroidScreen() {
                 }) {
                     Spacer(modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues()))
                 }
-                items(
-                    if (state.listSortDirection == ListSortDirection.DESCENDING) {
-                        state.puzzleHistoryList
-                    } else {
-                        state.puzzleHistoryList.reversed()
-                    },
-                ) { uiPuzzleHistoryItem ->
+                items(state.puzzleHistoryList) { uiPuzzleHistoryItem ->
                     PuzzleHistoryItem(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         borderStroke = BorderStroke(

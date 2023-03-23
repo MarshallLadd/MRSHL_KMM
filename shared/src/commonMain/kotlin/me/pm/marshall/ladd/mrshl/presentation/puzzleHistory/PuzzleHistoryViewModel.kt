@@ -12,6 +12,7 @@ import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.mappers.toUIPuzzleHistoryEntity
 import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
+import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.ListFilterOption
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.ListSortDirection
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryEvent
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryState
@@ -27,8 +28,17 @@ class PuzzleHistoryViewModel(
     private val _state = MutableStateFlow(value = PuzzleHistoryState())
     val state = combine(_state, databaseOperations.getAllPuzzlesAsFlow()) { state, puzzleList ->
         if (state.puzzleHistoryList != puzzleList) {
+            var newList = puzzleList.map { it.toUIPuzzleHistoryEntity() }
+            if (state.listSortDirection == ListSortDirection.DESCENDING) {
+                newList = newList.reversed()
+            }
+            newList = when (state.listFilterOption) {
+                ListFilterOption.ALL -> newList
+                ListFilterOption.COMPLETE -> newList.filter { it.completedDateString != null }
+                ListFilterOption.INCOMPLETE -> newList.filter { it.completedDateString == null }
+            }
             state.copy(
-                puzzleHistoryList = puzzleList.map { it.toUIPuzzleHistoryEntity() },
+                puzzleHistoryList = newList,
             )
         } else {
             state

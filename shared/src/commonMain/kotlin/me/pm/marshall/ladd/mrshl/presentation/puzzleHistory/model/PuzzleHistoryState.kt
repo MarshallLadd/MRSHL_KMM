@@ -8,7 +8,7 @@ data class PuzzleHistoryState(
     val currentStreak: Int = 0,
     val error: NetworkError? = null,
     val isRefreshing: Boolean = false,
-    val listSortDirection: ListSortDirection = ListSortDirection.DESCENDING,
+    val listSortDirection: ListSortDirection = ListSortDirection.ASCENDING,
     val listFilterOption: ListFilterOption = ListFilterOption.ALL,
 )
 

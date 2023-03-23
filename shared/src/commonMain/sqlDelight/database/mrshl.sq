@@ -8,7 +8,17 @@ CREATE TABLE puzzleEntity(
 
 getAllPuzzles:
 SELECT * FROM puzzleEntity
-ORDER BY id DESC;
+ORDER BY id ASC;
+
+getAllPlayedPuzzles:
+SELECT * FROM puzzleEntity
+WHERE completedDate IS NOT NULL
+ORDER BY id ASC;
+
+getUnplayedPuzzles:
+SELECT * FROM puzzleEntity
+WHERE completedDate IS NULL
+ORDER BY id ASC;
 
 getPuzzleById:
 SELECT * FROM puzzleEntity

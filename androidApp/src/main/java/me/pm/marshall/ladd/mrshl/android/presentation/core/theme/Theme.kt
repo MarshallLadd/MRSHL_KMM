@@ -2,17 +2,11 @@ package me.pm.marshall.ladd.mrshl.android.presentation.core.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Shapes
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import cafe.adriel.voyager.navigator.Navigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import me.pm.marshall.ladd.mrshl.android.presentation.loadingScreen.LoadingSplashScreen
 
 @Composable
 fun MrshlAppTheme(
@@ -28,7 +22,7 @@ fun MrshlAppTheme(
     MaterialTheme(
         colors = colors,
         typography = typography,
-//        shapes = Shapes,
+        shapes = shapes,
         content = content
     )
 }

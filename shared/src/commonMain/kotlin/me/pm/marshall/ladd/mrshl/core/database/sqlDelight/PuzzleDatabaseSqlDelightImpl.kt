@@ -2,13 +2,13 @@ package me.pm.marshall.ladd.mrshl.core.database.sqlDelight
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import database.PuzzleDbEntity
+import database.PuzzleEntity
 import kotlinx.coroutines.flow.map
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformFlow
-import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
 import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleForPlay
+import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
 import me.pm.marshall.ladd.mrshl.presentation.core.PuzzleForPlay
 
 class PuzzleDatabaseSqlDelightImpl(
@@ -46,7 +46,7 @@ class PuzzleDatabaseSqlDelightImpl(
             .toPuzzleForPlay()
     }
 
-    override suspend fun insertNewPuzzle(entry: PuzzleDbEntity) {
+    override suspend fun insertNewPuzzle(entry: PuzzleEntity) {
         queries.insertNewPuzzle(
             id = entry.id,
             answer = entry.answer,
@@ -56,7 +56,7 @@ class PuzzleDatabaseSqlDelightImpl(
         )
     }
 
-    override suspend fun updatePuzzle(entry: PuzzleDbEntity) {
+    override suspend fun updatePuzzle(entry: PuzzleEntity) {
         queries.updatePuzzle(
             id = entry.id,
             answer = entry.answer,

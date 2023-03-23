@@ -1,18 +1,18 @@
 package me.pm.marshall.ladd.mrshl.core.mappers
 
-import database.PuzzleDbEntity
+import database.PuzzleEntity
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import me.pm.marshall.ladd.mrshl.core.network.answers.model.AllPuzzlesNetworkDTO
-import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryItem
 import me.pm.marshall.ladd.mrshl.presentation.core.PuzzleForPlay
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
+import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistoryItem
 
 // PuzzleEntity is the sqlDelight generated class for the DB
 
-fun PuzzleDbEntity.toPuzzleForPlay(): PuzzleForPlay {
+fun PuzzleEntity.toPuzzleForPlay(): PuzzleForPlay {
     return PuzzleForPlay(
         id = this.id,
         answer = this.answer,
@@ -36,7 +36,7 @@ fun PuzzleDbEntity.toPuzzleForPlay(): PuzzleForPlay {
     )
 }
 
-fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleDbEntity {
+fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleEntity {
     var guessString = ""
     if (guessList.isNotEmpty()) {
         guessList.forEachIndexed { index, singleGuess ->
@@ -47,7 +47,7 @@ fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleDbEntity {
             }
         }
     }
-    return PuzzleDbEntity(
+    return PuzzleEntity(
         id = this.id,
         answer = this.answer,
         guessString = guessString,
@@ -62,8 +62,8 @@ fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleDbEntity {
     )
 }
 
-fun AllPuzzlesNetworkDTO.toPuzzleDbEntity(): PuzzleDbEntity {
-    return PuzzleDbEntity(
+fun AllPuzzlesNetworkDTO.toPuzzleDbEntity(): PuzzleEntity {
+    return PuzzleEntity(
         id = this.id.toLong(),
         answer = this.answer,
         puzzleDate = this.day.toLong(),
@@ -72,7 +72,7 @@ fun AllPuzzlesNetworkDTO.toPuzzleDbEntity(): PuzzleDbEntity {
     )
 }
 
-fun PuzzleDbEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryItem {
+fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryItem {
     return UIPuzzleHistoryItem(
         id = this.id.toInt(),
 //        guessList = this.guessString?.split(',') ?: emptyList(),

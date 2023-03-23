@@ -73,7 +73,6 @@ class LoadingScreenViewModel(
                     )
                 }
                 cacheRemotePuzzles()
-//                simulateCacheRemotePuzzles()
             }
         }
     }

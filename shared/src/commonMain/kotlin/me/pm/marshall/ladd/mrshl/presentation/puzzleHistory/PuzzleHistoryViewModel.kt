@@ -51,10 +51,13 @@ class PuzzleHistoryViewModel(
         when (event) {
             is PuzzleHistoryEvent.ChoosePuzzle -> {
                 _state.update {
-                    it.copy(selectedPuzzleId = event.puzzleId)
+                    val requestedPuzzleId: Long = event.puzzleId ?: kotlin.run {
+                        databaseOperations.getAllUnplayedPuzzlesAsList().random().id
+                    }
+                    it.copy(selectedPuzzleId = requestedPuzzleId)
                 }
             }
-            PuzzleHistoryEvent.ErrorSeen -> TODO()
+
             PuzzleHistoryEvent.ForceUpdateFromRemote -> {
                 viewModelScope.launch {
                     _state.update { it.copy(isRefreshing = true) }
@@ -63,14 +66,13 @@ class PuzzleHistoryViewModel(
                 }
             }
 
-            is PuzzleHistoryEvent.JumpToPuzzle -> TODO()
-            PuzzleHistoryEvent.ScrollToTop -> TODO()
             PuzzleHistoryEvent.FlipListDirection -> {
-                val newDirection = if (state.value.listSortDirection == ListSortDirection.DESCENDING) {
-                    ListSortDirection.ASCENDING
-                } else {
-                    ListSortDirection.DESCENDING
-                }
+                val newDirection =
+                    if (state.value.listSortDirection == ListSortDirection.DESCENDING) {
+                        ListSortDirection.ASCENDING
+                    } else {
+                        ListSortDirection.DESCENDING
+                    }
                 _state.update { it.copy(listSortDirection = newDirection) }
             }
 

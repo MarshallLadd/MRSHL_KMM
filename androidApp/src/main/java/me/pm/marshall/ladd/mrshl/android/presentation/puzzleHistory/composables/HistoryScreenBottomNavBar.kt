@@ -20,6 +20,7 @@ import androidx.compose.material.icons.sharp.ArrowDownward
 import androidx.compose.material.icons.sharp.ArrowUpward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.chipShape
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.goodLetterGoodPlaceBackground
@@ -70,7 +71,7 @@ fun HistoryScreenBottomNavBar(
             },
             leadingIcon = null,
             content = {
-                Text(text = " All ")
+                Text(text = " All ", style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Bold))
             },
             selected = state.listFilterOption == ListFilterOption.ALL,
             shape = MaterialTheme.shapes.chipShape,
@@ -83,7 +84,7 @@ fun HistoryScreenBottomNavBar(
             },
             leadingIcon = null,
             content = {
-                Text(text = " New ")
+                Text(text = " New ", style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Bold))
             },
             selected = state.listFilterOption == ListFilterOption.INCOMPLETE,
             shape = MaterialTheme.shapes.chipShape,
@@ -96,7 +97,7 @@ fun HistoryScreenBottomNavBar(
             },
             leadingIcon = null,
             content = {
-                Text(text = " Played ")
+                Text(text = " Played ", style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Bold))
             },
             selected = state.listFilterOption == ListFilterOption.COMPLETE,
             shape = MaterialTheme.shapes.chipShape,

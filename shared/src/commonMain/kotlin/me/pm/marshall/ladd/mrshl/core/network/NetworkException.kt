@@ -1,5 +1,8 @@
 package me.pm.marshall.ladd.mrshl.core.network
 
+/**
+ *
+ */
 enum class NetworkError {
     SERVICE_UNAVAILABLE,
     CLIENT_ERROR,

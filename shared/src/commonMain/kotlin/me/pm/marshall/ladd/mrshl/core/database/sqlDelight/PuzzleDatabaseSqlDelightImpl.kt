@@ -39,6 +39,12 @@ class PuzzleDatabaseSqlDelightImpl(
             }
     }
 
+    override fun getAllUnplayedPuzzlesAsList(): List<PuzzleEntity> {
+        return queries
+            .getUnplayedPuzzles()
+            .executeAsList()
+    }
+
     override fun getPuzzleById(requestedId: Long): PuzzleForPlay {
         return queries
             .getPuzzleById(requestedId)

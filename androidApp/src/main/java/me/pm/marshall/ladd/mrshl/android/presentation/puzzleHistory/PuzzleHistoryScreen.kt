@@ -60,7 +60,7 @@ object PuzzleHistoryScreen : AndroidScreen() {
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = {
-                        viewModel.onEvent(PuzzleHistoryEvent.FlipListDirection)
+                        viewModel.onEvent(PuzzleHistoryEvent.ChoosePuzzle(null))
                     },
                     content = {
                         Icon(

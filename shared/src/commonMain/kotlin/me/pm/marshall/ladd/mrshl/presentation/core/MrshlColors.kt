@@ -1,5 +1,12 @@
 package me.pm.marshall.ladd.mrshl.presentation.core
 
+/**
+ * Hex values for all the colors used in the MRSHL app.
+ *
+ * These colors are to be implemented in their native platform and theme engine.
+ *
+ * @author Marshall Ladd
+ */
 object MrshlColors {
     const val White = 0xFFFFFFFF
     const val Black = 0xFF000000

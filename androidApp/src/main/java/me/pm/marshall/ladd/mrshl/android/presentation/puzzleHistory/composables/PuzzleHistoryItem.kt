@@ -53,7 +53,7 @@ fun PuzzleHistoryItem(
                 .wrapContentSize()
                 .padding(2.dp),
         ) {
-            (0..4).forEach {
+            for (it in 0..4) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
                     tileState = puzzleHistory.guessList[it],
@@ -65,7 +65,7 @@ fun PuzzleHistoryItem(
                 .wrapContentSize()
                 .padding(2.dp),
         ) {
-            (5..9).forEach {
+            for (it in 5..9) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
                     tileState = puzzleHistory.guessList[it],
@@ -77,7 +77,7 @@ fun PuzzleHistoryItem(
                 .wrapContentSize()
                 .padding(2.dp),
         ) {
-            (10..14).forEach {
+            for (it in 10..14) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
                     tileState = puzzleHistory.guessList[it],
@@ -89,7 +89,7 @@ fun PuzzleHistoryItem(
                 .wrapContentSize()
                 .padding(2.dp),
         ) {
-            (15..19).forEach {
+            for (it in 15..19) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
                     tileState = puzzleHistory.guessList[it],
@@ -101,7 +101,7 @@ fun PuzzleHistoryItem(
                 .wrapContentSize()
                 .padding(2.dp),
         ) {
-            (20..24).forEach {
+            for (it in 20..24) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
                     tileState = puzzleHistory.guessList[it],
@@ -113,7 +113,7 @@ fun PuzzleHistoryItem(
                 .wrapContentSize()
                 .padding(2.dp),
         ) {
-            (25..29).forEach {
+            for (it in 25..29) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
                     tileState = puzzleHistory.guessList[it],

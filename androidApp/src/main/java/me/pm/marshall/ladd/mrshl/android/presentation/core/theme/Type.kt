@@ -106,3 +106,12 @@ val Typography.guessLetter: TextStyle
         fontSize = 32.sp,
         letterSpacing = (0).sp,
     )
+
+@get:Composable
+val Typography.keyboardLetter: TextStyle
+    get() = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        letterSpacing = (0).sp,
+    )

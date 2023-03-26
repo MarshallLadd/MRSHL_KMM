@@ -2,6 +2,7 @@ package me.pm.marshall.ladd.mrshl.core.database.sqlDelight
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import database.PuzzleEntity
 import kotlinx.coroutines.flow.map
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
@@ -45,11 +46,14 @@ class PuzzleDatabaseSqlDelightImpl(
             .executeAsList()
     }
 
-    override fun getPuzzleById(requestedId: Long): PuzzleForPlay {
+    override fun getPuzzleById(requestedId: Long): MultiplatformFlow<PuzzleForPlay> {
         return queries
             .getPuzzleById(requestedId)
-            .executeAsOne()
-            .toPuzzleForPlay()
+            .asFlow()
+            .mapToOne()
+            .map { it.toPuzzleForPlay() }
+            .toMultiplatformFlow()
+
     }
 
     override suspend fun insertNewPuzzle(entry: PuzzleEntity) {

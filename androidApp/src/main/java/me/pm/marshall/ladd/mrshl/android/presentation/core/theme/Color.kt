@@ -23,12 +23,12 @@ val lightColorPalette = lightColors(
 )
 
 val darkColorPalette = darkColors(
-    primary = Color(MrshlColors.DarkBackground),
+    primary = Color(MrshlColors.DarkSurface),
     primaryVariant = Color(MrshlColors.DarkKeyboardGrey),
     secondary = Color(MrshlColors.Green),
     secondaryVariant = Color(MrshlColors.Yellow),
     background = Color(MrshlColors.DarkBackground),
-    surface = Color(MrshlColors.DarkBackground),
+    surface = Color(MrshlColors.DarkSurface),
     onPrimary = Color(MrshlColors.White),
     onSecondary = Color(MrshlColors.White),
     onSurface = Color(MrshlColors.White),

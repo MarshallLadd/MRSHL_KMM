@@ -14,7 +14,8 @@ object MrshlColors {
     const val Yellow = 0xFFC9B458
     const val LightKeyboardGrey = 0xFFD3D6DA
     const val DarkKeyboardGrey = 0xFF818384
-    const val DarkBackground = 0xFF121213
+    const val DarkSurface = 0xFF121213
+    const val DarkBackground = 0xFF242425
     const val LightBackground = 0xFFEBEEF1
     const val LightBorderEmpty = 0xFFD3D6DA
     const val DarkBorderEmpty = 0xFF3A3A3C

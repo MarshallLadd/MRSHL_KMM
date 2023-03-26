@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.pm.marshall.ladd.mrshl.android.presentation.core.theme.keyboardLetter
@@ -19,6 +20,7 @@ fun DeleteKey(
 ) {
     Surface(
         modifier = modifier
+            .clip(MaterialTheme.shapes.medium)
             .clickable { onClick() },
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colors.primaryVariant,

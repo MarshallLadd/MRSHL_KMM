@@ -56,7 +56,8 @@ fun PuzzleHistoryItem(
             for (it in 0..4) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it],
+                    tileState = puzzleHistory.tileStateList.getOrNull(it)
+                        ?: TileState.UnsubmittedGuess(null),
                 )
             }
         }
@@ -68,7 +69,8 @@ fun PuzzleHistoryItem(
             for (it in 5..9) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it],
+                    tileState = puzzleHistory.tileStateList.getOrNull(it)
+                        ?: TileState.UnsubmittedGuess(null),
                 )
             }
         }
@@ -80,7 +82,8 @@ fun PuzzleHistoryItem(
             for (it in 10..14) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it],
+                    tileState = puzzleHistory.tileStateList.getOrNull(it)
+                        ?: TileState.UnsubmittedGuess(null),
                 )
             }
         }
@@ -92,7 +95,8 @@ fun PuzzleHistoryItem(
             for (it in 15..19) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it],
+                    tileState = puzzleHistory.tileStateList.getOrNull(it)
+                        ?: TileState.UnsubmittedGuess(null),
                 )
             }
         }
@@ -104,7 +108,8 @@ fun PuzzleHistoryItem(
             for (it in 20..24) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it],
+                    tileState = puzzleHistory.tileStateList.getOrNull(it)
+                        ?: TileState.UnsubmittedGuess(null),
                 )
             }
         }
@@ -116,7 +121,8 @@ fun PuzzleHistoryItem(
             for (it in 25..29) {
                 PuzzleHistoryGuessTile(
                     modifier = tileModifier,
-                    tileState = puzzleHistory.guessList[it],
+                    tileState = puzzleHistory.tileStateList.getOrNull(it)
+                        ?: TileState.UnsubmittedGuess(null),
                 )
             }
         }
@@ -143,7 +149,7 @@ fun PuzzleHistoryItemPreviews() {
             textColor = MaterialTheme.colors.onSurface,
             puzzleHistory = UIPuzzleHistoryItem(
                 id = 420,
-                guessList = List(30) {
+                tileStateList = List(30) {
                     if (it % 3 == 0) {
                         TileState.BadGuess('L')
                     } else if (it % 4 == 0) {

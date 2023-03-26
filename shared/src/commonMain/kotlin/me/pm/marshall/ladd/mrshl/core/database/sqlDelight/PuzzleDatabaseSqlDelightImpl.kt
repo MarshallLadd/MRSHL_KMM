@@ -61,6 +61,7 @@ class PuzzleDatabaseSqlDelightImpl(
             id = entry.id,
             answer = entry.answer,
             guessString = entry.guessString,
+            tileStatusString = entry.tileStatusString,
             puzzleDate = entry.puzzleDate,
             completedDate = entry.completedDate,
         )
@@ -71,6 +72,7 @@ class PuzzleDatabaseSqlDelightImpl(
             id = entry.id,
             answer = entry.answer,
             guessString = entry.guessString,
+            tileStatusString = entry.tileStatusString,
             completedDate = entry.completedDate,
         )
     }

@@ -3,6 +3,7 @@ package me.pm.marshall.ladd.mrshl.presentation.playPuzzle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCache
 import me.pm.marshall.ladd.mrshl.domain.useCases.ValidateGuess
 import me.pm.marshall.ladd.mrshl.presentation.core.PuzzleForPlay
@@ -12,6 +13,7 @@ class PlayPuzzleViewModel(
     private val puzzleId: Long,
     private val validateGuess: ValidateGuess,
     private val updatePuzzleInCache: UpdatePuzzleInCache,
+    private val databaseOperations: PuzzleDatabaseOperations,
     private val coroutineScope: CoroutineScope,
 ) {
 
@@ -22,7 +24,7 @@ class PlayPuzzleViewModel(
             puzzle = PuzzleForPlay(
                 id = puzzleId,
                 answer = "MRSHL",
-                guessList = emptyList(),
+                guessList = ArrayDeque(),
                 puzzleDateString = "",
                 completedDateString = null,
             ),

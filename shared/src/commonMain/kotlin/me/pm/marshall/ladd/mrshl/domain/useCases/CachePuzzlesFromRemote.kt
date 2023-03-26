@@ -13,13 +13,18 @@ class CachePuzzlesFromRemote(
 
     suspend fun execute(): Result<Unit> {
         return try {
-            puzzleClient
-                .getAllPuzzles()
-                .filter { it.id.toInt() > databaseOperations.getAllPuzzlesAsList().lastIndex }
-                .forEach {
-                    databaseOperations.insertNewPuzzle(it.toPuzzleDbEntity())
-                }
-
+            if (databaseOperations.getAllPuzzlesAsList().isEmpty()) {
+                puzzleClient
+                    .getAllPuzzles()
+                    .forEach { databaseOperations.insertNewPuzzle(it.toPuzzleDbEntity()) }
+            } else {
+                puzzleClient
+                    .getAllPuzzles()
+                    .filter { it.id.toInt() > databaseOperations.getAllPuzzlesAsList().lastIndex }
+                    .forEach {
+                        databaseOperations.insertNewPuzzle(it.toPuzzleDbEntity())
+                    }
+            }
             Result.Success(Unit)
         } catch (e: NetworkException) {
             e.printStackTrace()

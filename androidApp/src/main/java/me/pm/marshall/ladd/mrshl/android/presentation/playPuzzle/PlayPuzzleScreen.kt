@@ -41,8 +41,6 @@ data class PlayPuzzleScreen(private val puzzleId: Long) : AndroidScreen() {
                 )
                 Keyboard(
                     modifier = Modifier
-//                        .padding(WindowInsets.navigationBars.asPaddingValues())
-//                        .padding(bottom = 16.dp)
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     onLetterPress = {},

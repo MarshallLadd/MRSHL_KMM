@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
+import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.mappers.toUIPuzzleHistoryEntity
 import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
@@ -26,7 +27,7 @@ class PuzzleHistoryViewModel(
     private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 
     private val _state = MutableStateFlow(value = PuzzleHistoryState())
-    val state = combine(_state, databaseOperations.getAllPuzzlesAsFlow()) { state, puzzleList ->
+    val state: MultiplatformStateFlow<PuzzleHistoryState> = combine(_state, databaseOperations.getAllPuzzlesAsFlow()) { state, puzzleList ->
         if (state.puzzleHistoryList != puzzleList) {
             var newList = puzzleList.map { it.toUIPuzzleHistoryEntity() }
             if (state.listSortDirection == ListSortDirection.DESCENDING) {

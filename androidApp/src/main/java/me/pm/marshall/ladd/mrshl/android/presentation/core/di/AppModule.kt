@@ -13,8 +13,12 @@ import me.pm.marshall.ladd.mrshl.core.database.sqlDelight.PuzzleDatabaseSqlDelig
 import me.pm.marshall.ladd.mrshl.core.network.HttpClientFactory
 import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiInterface
 import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiKtorImpl
+import me.pm.marshall.ladd.mrshl.core.network.guessCheck.GuessCheckInterface
+import me.pm.marshall.ladd.mrshl.core.network.guessCheck.GuessCheckInterfaceImpl
 import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
 import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
+import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCache
+import me.pm.marshall.ladd.mrshl.domain.useCases.ValidateGuess
 import javax.inject.Singleton
 
 @Module
@@ -61,5 +65,29 @@ object AppModule {
             answersApiKtorImpl,
             database,
         )
+    }
+
+    @Provides
+    @Singleton
+    fun providesUpdatePuzzleInCache(
+        database: PuzzleDatabaseOperations
+    ): UpdatePuzzleInCache {
+        return UpdatePuzzleInCache(database)
+    }
+
+    @Provides
+    @Singleton
+    fun providesValidateGuess(
+        guessCheckInterface: GuessCheckInterface
+    ): ValidateGuess {
+        return ValidateGuess(guessCheckInterface)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGuessCheckInterface(
+        httpClient: HttpClient
+    ): GuessCheckInterface {
+        return GuessCheckInterfaceImpl(httpClient)
     }
 }

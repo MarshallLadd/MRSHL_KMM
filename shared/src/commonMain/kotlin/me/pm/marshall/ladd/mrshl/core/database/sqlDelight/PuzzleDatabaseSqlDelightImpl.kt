@@ -46,7 +46,7 @@ class PuzzleDatabaseSqlDelightImpl(
             .executeAsList()
     }
 
-    override fun getPuzzleById(requestedId: Long): MultiplatformFlow<PuzzleForPlay> {
+    override fun getPuzzleByIdAsFlow(requestedId: Long): MultiplatformFlow<PuzzleForPlay> {
         return queries
             .getPuzzleById(requestedId)
             .asFlow()
@@ -54,6 +54,12 @@ class PuzzleDatabaseSqlDelightImpl(
             .map { it.toPuzzleForPlay() }
             .toMultiplatformFlow()
 
+    }
+
+    override fun getPuzzleById(requestedId: Long): PuzzleEntity {
+        return queries
+            .getPuzzleById(requestedId)
+            .executeAsOne()
     }
 
     override suspend fun insertNewPuzzle(entry: PuzzleEntity) {
@@ -64,16 +70,17 @@ class PuzzleDatabaseSqlDelightImpl(
             tileStatusString = entry.tileStatusString,
             puzzleDate = entry.puzzleDate,
             completedDate = entry.completedDate,
+            numberOfGuesses = 0
         )
     }
 
     override suspend fun updatePuzzle(entry: PuzzleEntity) {
         queries.updatePuzzle(
-            id = entry.id,
-            answer = entry.answer,
+            puzzleId = entry.id,
             guessString = entry.guessString,
             tileStatusString = entry.tileStatusString,
             completedDate = entry.completedDate,
+            numberOfGuesses = entry.numberOfGuesses
         )
     }
 }

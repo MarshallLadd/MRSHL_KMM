@@ -8,7 +8,8 @@ interface PuzzleDatabaseOperations {
     fun getAllPuzzlesAsFlow(): MultiplatformFlow<List<PuzzleForPlay>>
     fun getAllPuzzlesAsList(): List<PuzzleForPlay>
     fun getAllUnplayedPuzzlesAsList(): List<PuzzleEntity>
-    fun getPuzzleById(requestedId: Long): MultiplatformFlow<PuzzleForPlay>
+    fun getPuzzleByIdAsFlow(requestedId: Long): MultiplatformFlow<PuzzleForPlay>
+    fun getPuzzleById(requestedId: Long): PuzzleEntity
     suspend fun insertNewPuzzle(entry: PuzzleEntity)
     suspend fun updatePuzzle(entry: PuzzleEntity)
 }

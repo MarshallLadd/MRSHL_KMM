@@ -29,3 +29,23 @@ fun Int.toTileState(letter: Char?): TileState {
         else -> TileState.UnsubmittedGuess(letter)
     }
 }
+
+fun List<TileState>.toGuessString(): String {
+    var guessString: String = ""
+    this.forEach { tileState ->
+        tileState
+            .letter
+            ?.let {
+                guessString += it
+            }
+    }
+    return guessString
+}
+
+fun List<TileState>.toTileStateString(): String {
+    var guessString: String = ""
+    this.forEach { tileState ->
+        guessString += tileState.toInt()
+    }
+    return guessString
+}

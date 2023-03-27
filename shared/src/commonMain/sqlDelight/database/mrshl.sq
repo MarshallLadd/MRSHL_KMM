@@ -3,6 +3,7 @@ CREATE TABLE puzzleEntity(
     answer TEXT NOT NULL,
     guessString TEXT,
     tileStatusString TEXT,
+    numberOfGuesses INTEGER,
     puzzleDate INTEGER NOT NULL,
     completedDate INTEGER
 );
@@ -32,12 +33,16 @@ INTO puzzleEntity(
     answer,
     guessString,
     tileStatusString,
+    numberOfGuesses,
     puzzleDate,
     completedDate
 )
-VALUES (?,?,?,?,?,?);
+VALUES (?,?,?,?,?,?,?);
 
 updatePuzzle:
 UPDATE puzzleEntity
-SET answer = :answer, guessString = :guessString, tileStatusString = :tileStatusString, completedDate = :completedDate
-WHERE id = :id;
+SET guessString = :guessString,
+tileStatusString = :tileStatusString,
+completedDate = :completedDate,
+numberOfGuesses = :numberOfGuesses
+WHERE id = :puzzleId;

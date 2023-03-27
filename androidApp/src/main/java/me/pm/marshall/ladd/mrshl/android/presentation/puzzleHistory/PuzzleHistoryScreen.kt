@@ -39,6 +39,7 @@ import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryS
 
 @OptIn(ExperimentalMaterialApi::class)
 object PuzzleHistoryScreen : AndroidScreen() {
+
     private var priorSelectedPuzzleId: Long? = null
 
     @Composable
@@ -49,7 +50,9 @@ object PuzzleHistoryScreen : AndroidScreen() {
         val scrollState = rememberLazyGridState()
         LaunchedEffect(key1 = state.selectedPuzzleId) {
             state.selectedPuzzleId?.let {
-                navigator push PlayPuzzleScreen(it)
+                navigator push PlayPuzzleScreen(
+                    puzzleId = it
+                )
                 viewModel.onEvent(PuzzleHistoryEvent.NavigatingToPuzzle)
             }
         }

@@ -19,7 +19,7 @@ fun PuzzleEntity.toPuzzleForPlay(): PuzzleForPlay {
     return PuzzleForPlay(
         id = this.id,
         answer = this.answer,
-        guessList = ArrayDeque(elements = this.guessString
+        guessList = this.guessString
             ?.toCharArray()
             ?.mapIndexed { index, char ->
                 this.tileStatusString
@@ -27,7 +27,7 @@ fun PuzzleEntity.toPuzzleForPlay(): PuzzleForPlay {
                     ?.map { it.digitToInt() }
                     ?.getOrElse(index = index, defaultValue = { 0 })
                     ?.toTileState(char) ?: TileState.UnsubmittedGuess(null)
-            } ?: emptyList()),
+            } ?: emptyList(),
         puzzleDateString = Instant
             .fromEpochMilliseconds(this.puzzleDate)
             .toLocalDateTime(TimeZone.UTC)
@@ -38,6 +38,7 @@ fun PuzzleEntity.toPuzzleForPlay(): PuzzleForPlay {
                 .toLocalDateTime(TimeZone.UTC)
                 .toString()
         },
+        numberOfGuesses = this.numberOfGuesses ?: 0
     )
 }
 
@@ -45,28 +46,32 @@ fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleEntity {
     var guessString = ""
     if (guessList.isNotEmpty()) {
         guessList.forEach { singleGuess ->
-            guessString += singleGuess.letter
+            guessString = "$guessString${singleGuess.letter}"
         }
     }
     var tileStateString = ""
-    if (tileStateString.isNotEmpty()) {
+    if (guessList.isNotEmpty()) {
         guessList.forEach { singleGuess ->
-            tileStateString += singleGuess.toInt()
+            tileStateString = "$tileStateString${singleGuess.toInt()}"
         }
     }
+    val puzzleDate = if (this.puzzleDateString.isNotEmpty()) {
+        this.puzzleDateString
+            .toLocalDateTime()
+            .toInstant(TimeZone.UTC)
+            .toEpochMilliseconds()
+    } else 0
     return PuzzleEntity(
         id = this.id,
         answer = this.answer,
         guessString = guessString,
         tileStatusString = null,
-        puzzleDate = this.puzzleDateString
-            .toLocalDateTime()
-            .toInstant(TimeZone.UTC)
-            .toEpochMilliseconds(),
+        puzzleDate = puzzleDate,
         completedDate = this.completedDateString
             ?.toLocalDateTime()
             ?.toInstant(TimeZone.UTC)
             ?.toEpochMilliseconds(),
+        numberOfGuesses = this.numberOfGuesses
     )
 }
 
@@ -78,6 +83,7 @@ fun AllPuzzlesNetworkDTO.toPuzzleDbEntity(): PuzzleEntity {
         guessString = null,
         tileStatusString = null,
         completedDate = null,
+        numberOfGuesses = 0
     )
 }
 

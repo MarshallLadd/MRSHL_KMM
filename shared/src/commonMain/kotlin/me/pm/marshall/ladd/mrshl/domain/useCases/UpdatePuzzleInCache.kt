@@ -1,17 +1,16 @@
 package me.pm.marshall.ladd.mrshl.domain.useCases
 
+import database.PuzzleEntity
 import me.pm.marshall.ladd.mrshl.core.Result
-import me.pm.marshall.ladd.mrshl.core.database.sqlDelight.PuzzleDatabaseSqlDelightImpl
-import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleDbEntity
-import me.pm.marshall.ladd.mrshl.presentation.core.PuzzleForPlay
+import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 
 class UpdatePuzzleInCache(
-    private val database: PuzzleDatabaseSqlDelightImpl,
+    private val database: PuzzleDatabaseOperations,
 ) {
 
-    suspend fun execute(update: PuzzleForPlay): Result<Unit> {
+    suspend fun execute(update: PuzzleEntity): Result<Unit> {
         return try {
-            database.updatePuzzle(update.toPuzzleDbEntity())
+            database.updatePuzzle(update)
             Result.Success(Unit)
         } catch (e: Exception) {
             e.printStackTrace()

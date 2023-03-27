@@ -18,7 +18,11 @@ class AndroidPuzzleHistoryViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val viewModel by lazy {
-        PuzzleHistoryViewModel(databaseOperations, cachePuzzles, viewModelScope)
+        PuzzleHistoryViewModel(
+            databaseOperations = databaseOperations,
+            cachePuzzles = cachePuzzles,
+            coroutineScope = viewModelScope
+        )
     }
 
     val state: MultiplatformStateFlow<PuzzleHistoryState> = viewModel.state

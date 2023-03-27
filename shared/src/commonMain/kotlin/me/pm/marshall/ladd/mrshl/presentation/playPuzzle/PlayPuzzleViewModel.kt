@@ -84,9 +84,9 @@ class PlayPuzzleViewModel(
                     if (
                         state.value.tileState.isNotEmpty() &&
                         state.value.tileState.size % 5 == 0 &&
-                        !(state.value.tileState
+                        state.value.tileState
                             .takeLast(5)
-                            .any { it !is TileState.GoodGuess })
+                            .all { it is TileState.UnsubmittedGuess }
                     ) {
                         val guessWord: String = state.value.tileState
                             .takeLast(5)
@@ -99,8 +99,10 @@ class PlayPuzzleViewModel(
                             }
 
                             is Result.Success -> {
-                                _state.update {
-                                    it.copy(numberOfGuesses = it.numberOfGuesses + 1)
+                                if (result.data) {
+                                    _state.update {
+                                        it.copy(numberOfGuesses = it.numberOfGuesses + 1)
+                                    }
                                 }
                             }
                         }
@@ -111,7 +113,10 @@ class PlayPuzzleViewModel(
             is PlayPuzzleEvent.KeyboardLetterClicked -> {
                 viewModelScope.launch {
                     val mutableTileState = state.value.tileState.toMutableList()
-                    if (mutableTileState.size < 30) {
+                    if (
+                        mutableTileState.size < 30 &&
+                        mutableTileState.size / 5 == state.value.numberOfGuesses
+                    ) {
                         mutableTileState.add(TileState.UnsubmittedGuess(event.letter))
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(
                             guessString = mutableTileState.toGuessString(),

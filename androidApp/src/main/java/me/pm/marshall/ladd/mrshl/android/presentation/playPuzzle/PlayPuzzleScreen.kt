@@ -82,7 +82,9 @@ data class PlayPuzzleScreen(
                     onDeletePress = {
                         viewModel.onEvent(PlayPuzzleEvent.KeyboardDeleteClicked)
                     },
-                    onEnterPress = {},
+                    onEnterPress = {
+                        viewModel.onEvent(PlayPuzzleEvent.KeyboardEnterClicked)
+                    },
                 )
             }
         }

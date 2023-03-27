@@ -4,7 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GuessCheckResponseDTO(
-    val success: Boolean?,
-    val message: String?,
-    val word: String?,
+    val word: String? = null,
 )

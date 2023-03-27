@@ -1,5 +1,6 @@
 package me.pm.marshall.ladd.mrshl.core.network.guessCheck
 
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -16,7 +17,6 @@ import me.pm.marshall.ladd.mrshl.core.network.guessCheck.model.GuessCheckRespons
 class GuessCheckInterfaceImpl(
     private val httpClient: HttpClient,
 ) : GuessCheckInterface {
-
     companion object {
         const val BASE_URL = "https://wordsapiv1.p.rapidapi.com/words/"
         const val API_HOST_STRING = "wordsapiv1.p.rapidapi.com"
@@ -32,9 +32,11 @@ class GuessCheckInterfaceImpl(
                 }
                 contentType(ContentType.Application.Json)
             }
+
         } catch (e: IOException) {
             throw Exception()
         }
+        Napier.i { result.toString() }
         when (result.status.value) {
             in 200..299, 404 -> Unit
             500 -> throw NetworkException(NetworkError.SERVER_ERROR)
@@ -44,6 +46,8 @@ class GuessCheckInterfaceImpl(
         return try {
             !(result.body<GuessCheckResponseDTO>().word.isNullOrBlank())
         } catch (e: Exception) {
+            e.printStackTrace()
+            Napier.e(e.stackTraceToString())
             throw NetworkException(NetworkError.PARSING_ERROR)
         }
     }

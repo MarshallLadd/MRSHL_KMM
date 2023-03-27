@@ -51,7 +51,7 @@ object PuzzleHistoryScreen : AndroidScreen() {
         LaunchedEffect(key1 = state.selectedPuzzleId) {
             state.selectedPuzzleId?.let {
                 navigator push PlayPuzzleScreen(
-                    puzzleId = it
+                    puzzleId = it,
                 )
                 viewModel.onEvent(PuzzleHistoryEvent.NavigatingToPuzzle)
             }

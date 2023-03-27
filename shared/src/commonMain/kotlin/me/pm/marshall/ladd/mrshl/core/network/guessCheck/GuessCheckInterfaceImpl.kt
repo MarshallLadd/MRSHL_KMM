@@ -32,7 +32,6 @@ class GuessCheckInterfaceImpl(
                 }
                 contentType(ContentType.Application.Json)
             }
-
         } catch (e: IOException) {
             throw Exception()
         }

@@ -30,32 +30,34 @@ import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleEvent
 import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleState
 
 data class PlayPuzzleScreen(
-    private val puzzleId: Long
+    private val puzzleId: Long,
 ) : AndroidScreen() {
 
     @Composable
     override fun Content() {
         val viewModel: AndroidPlayPuzzleViewModel =
-            getViewModel<AndroidPlayPuzzleViewModel>(viewModelProviderFactory = object :
-                ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    val databaseOperations = AppModule.providesDatabaseOperations(
-                        AppModule.providesMrshlDatabase(BaseApplication.INSTANCE)
-                    )
-                    return AndroidPlayPuzzleViewModel(
-                        puzzleId = puzzleId,
-                        validateGuess = AppModule.providesValidateGuess(
-                            AppModule.providesGuessCheckInterface(
-                                AppModule.providesAnswersHttpClient()
-                            )
-                        ),
-                        updatePuzzleInCache = AppModule.providesUpdatePuzzleInCache(
-                            databaseOperations
-                        ),
-                        databaseOperations = databaseOperations
-                    ) as T
-                }
-            })
+            getViewModel<AndroidPlayPuzzleViewModel>(
+                viewModelProviderFactory = object :
+                    ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        val databaseOperations = AppModule.providesDatabaseOperations(
+                            AppModule.providesMrshlDatabase(BaseApplication.INSTANCE),
+                        )
+                        return AndroidPlayPuzzleViewModel(
+                            puzzleId = puzzleId,
+                            validateGuess = AppModule.providesValidateGuess(
+                                AppModule.providesGuessCheckInterface(
+                                    AppModule.providesAnswersHttpClient(),
+                                ),
+                            ),
+                            updatePuzzleInCache = AppModule.providesUpdatePuzzleInCache(
+                                databaseOperations,
+                            ),
+                            databaseOperations = databaseOperations,
+                        ) as T
+                    }
+                },
+            )
         val state: PlayPuzzleState by viewModel.state.collectAsState()
         Scaffold() {
             Column(

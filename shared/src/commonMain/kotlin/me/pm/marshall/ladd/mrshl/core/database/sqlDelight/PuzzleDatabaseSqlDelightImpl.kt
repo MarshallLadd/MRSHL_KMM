@@ -53,7 +53,6 @@ class PuzzleDatabaseSqlDelightImpl(
             .mapToOne()
             .map { it.toPuzzleForPlay() }
             .toMultiplatformFlow()
-
     }
 
     override fun getPuzzleById(requestedId: Long): PuzzleEntity {
@@ -70,7 +69,7 @@ class PuzzleDatabaseSqlDelightImpl(
             tileStatusString = entry.tileStatusString,
             puzzleDate = entry.puzzleDate,
             completedDate = entry.completedDate,
-            numberOfGuesses = 0
+            numberOfGuesses = 0,
         )
     }
 
@@ -80,7 +79,7 @@ class PuzzleDatabaseSqlDelightImpl(
             guessString = entry.guessString,
             tileStatusString = entry.tileStatusString,
             completedDate = entry.completedDate,
-            numberOfGuesses = entry.numberOfGuesses
+            numberOfGuesses = entry.numberOfGuesses,
         )
     }
 }

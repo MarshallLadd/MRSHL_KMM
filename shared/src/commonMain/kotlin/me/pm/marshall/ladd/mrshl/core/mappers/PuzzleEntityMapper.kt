@@ -15,7 +15,6 @@ import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.UIPuzzleHistor
 // PuzzleEntity is the sqlDelight generated class for the DB
 
 fun PuzzleEntity.toPuzzleForPlay(): PuzzleForPlay {
-
     return PuzzleForPlay(
         id = this.id,
         answer = this.answer,
@@ -38,7 +37,7 @@ fun PuzzleEntity.toPuzzleForPlay(): PuzzleForPlay {
                 .toLocalDateTime(TimeZone.UTC)
                 .toString()
         },
-        numberOfGuesses = this.numberOfGuesses ?: 0
+        numberOfGuesses = this.numberOfGuesses ?: 0,
     )
 }
 
@@ -60,7 +59,9 @@ fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleEntity {
             .toLocalDateTime()
             .toInstant(TimeZone.UTC)
             .toEpochMilliseconds()
-    } else 0
+    } else {
+        0
+    }
     return PuzzleEntity(
         id = this.id,
         answer = this.answer,
@@ -71,7 +72,7 @@ fun PuzzleForPlay.toPuzzleDbEntity(): PuzzleEntity {
             ?.toLocalDateTime()
             ?.toInstant(TimeZone.UTC)
             ?.toEpochMilliseconds(),
-        numberOfGuesses = this.numberOfGuesses
+        numberOfGuesses = this.numberOfGuesses,
     )
 }
 
@@ -83,7 +84,7 @@ fun AllPuzzlesNetworkDTO.toPuzzleDbEntity(): PuzzleEntity {
         guessString = null,
         tileStatusString = null,
         completedDate = null,
-        numberOfGuesses = 0
+        numberOfGuesses = 0,
     )
 }
 
@@ -109,7 +110,7 @@ fun PuzzleEntity.toUIPuzzleHistoryEntity(): UIPuzzleHistoryItem {
                 it
                     .digitToInt()
                     .toTileState(null)
-            } ?: emptyList()
+            } ?: emptyList(),
     )
 }
 

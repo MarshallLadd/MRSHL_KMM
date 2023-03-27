@@ -25,7 +25,7 @@ fun LetterKey(
             .clickable { onLetterPress(letter) },
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colors.primaryVariant,
-        contentColor = contentColorFor(backgroundColor = MaterialTheme.colors.primaryVariant)
+        contentColor = contentColorFor(backgroundColor = MaterialTheme.colors.primaryVariant),
     ) {
         Text(
             modifier = Modifier

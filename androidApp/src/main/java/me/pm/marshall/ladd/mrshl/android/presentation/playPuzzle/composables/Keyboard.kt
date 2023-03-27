@@ -37,13 +37,13 @@ fun Keyboard(
     Surface(
         modifier = modifier,
         color = MaterialTheme.colors.surface,
-        shape = MaterialTheme.shapes.large
+        shape = MaterialTheme.shapes.large,
     ) {
         Column(
             modifier = Modifier
                 .wrapContentSize()
                 .padding(WindowInsets.navigationBars.asPaddingValues())
-                .padding(bottom = 8.dp, top = 16.dp)
+                .padding(bottom = 8.dp, top = 16.dp),
         ) {
             Row(
                 modifier = rowModifier,

@@ -21,7 +21,7 @@ class AndroidPuzzleHistoryViewModel @Inject constructor(
         PuzzleHistoryViewModel(
             databaseOperations = databaseOperations,
             cachePuzzles = cachePuzzles,
-            coroutineScope = viewModelScope
+            coroutineScope = viewModelScope,
         )
     }
 

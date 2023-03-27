@@ -17,7 +17,7 @@ class AndroidPlayPuzzleViewModel @AssistedInject constructor(
     @Assisted private val puzzleId: Long,
     private val validateGuess: ValidateGuess,
     private val updatePuzzleInCache: UpdatePuzzleInCache,
-    private val databaseOperations: PuzzleDatabaseOperations
+    private val databaseOperations: PuzzleDatabaseOperations,
 ) : ViewModel() {
 
     private val viewModel by lazy {
@@ -26,7 +26,7 @@ class AndroidPlayPuzzleViewModel @AssistedInject constructor(
             validateGuess = validateGuess,
             updatePuzzleInCache = updatePuzzleInCache,
             databaseOperations = databaseOperations,
-            coroutineScope = viewModelScope
+            coroutineScope = viewModelScope,
         )
     }
 

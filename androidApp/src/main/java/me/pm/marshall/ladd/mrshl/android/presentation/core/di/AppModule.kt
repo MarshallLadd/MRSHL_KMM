@@ -70,7 +70,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesUpdatePuzzleInCache(
-        database: PuzzleDatabaseOperations
+        database: PuzzleDatabaseOperations,
     ): UpdatePuzzleInCache {
         return UpdatePuzzleInCache(database)
     }
@@ -78,7 +78,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesValidateGuess(
-        guessCheckInterface: GuessCheckInterface
+        guessCheckInterface: GuessCheckInterface,
     ): ValidateGuess {
         return ValidateGuess(guessCheckInterface)
     }
@@ -86,7 +86,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesGuessCheckInterface(
-        httpClient: HttpClient
+        httpClient: HttpClient,
     ): GuessCheckInterface {
         return GuessCheckInterfaceImpl(httpClient)
     }

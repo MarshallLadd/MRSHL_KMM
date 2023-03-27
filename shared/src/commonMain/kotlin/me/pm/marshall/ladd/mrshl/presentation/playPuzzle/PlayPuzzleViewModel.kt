@@ -34,19 +34,19 @@ class PlayPuzzleViewModel(
     private val _state = MutableStateFlow(
         value = PlayPuzzleState(
             puzzleId = puzzleId,
-            tileState = emptyList()
+            tileState = emptyList(),
         ),
     )
     val state: MultiplatformStateFlow<PlayPuzzleState> =
         combine(
             _state,
             databaseOperations
-                .getPuzzleByIdAsFlow(puzzleId)
+                .getPuzzleByIdAsFlow(puzzleId),
         ) { state, puzzle ->
             if (state.tileState != puzzle.guessList) {
                 state.copy(
                     tileState = puzzle.guessList,
-                    numberOfGuesses = puzzle.numberOfGuesses.toInt()
+                    numberOfGuesses = puzzle.numberOfGuesses.toInt(),
                 )
             } else {
                 state
@@ -57,16 +57,16 @@ class PlayPuzzleViewModel(
                 SharingStarted.WhileSubscribed(),
                 PlayPuzzleState(
                     puzzleId = puzzleId,
-                    tileState = emptyList()
-                )
+                    tileState = emptyList(),
+                ),
             )
             .toMultiplatformStateFlow()
 
     fun onEvent(event: PlayPuzzleEvent) {
         when (event) {
             is PlayPuzzleEvent.FailedToValidateGuess -> {
-
             }
+
             PlayPuzzleEvent.KeyboardDeleteClicked -> {
                 viewModelScope.launch {
                     val mutableTileState = state.value.tileState.toMutableList()
@@ -79,10 +79,10 @@ class PlayPuzzleViewModel(
                         mutableTileState.removeLastOrNull()
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(
                             guessString = mutableTileState.toGuessString(),
-                            tileStatusString = mutableTileState.toTileStateString()
+                            tileStatusString = mutableTileState.toTileStateString(),
                         )
                         updatePuzzleInCache.execute(
-                            puzzleEntity
+                            puzzleEntity,
                         )
                     }
                 }
@@ -105,7 +105,11 @@ class PlayPuzzleViewModel(
                             }
                         when (val result = validateGuess.execute(guessWord)) {
                             is Result.Error -> {
-                                onEvent(PlayPuzzleEvent.FailedToValidateGuess((result.throwable as NetworkException).error))
+                                onEvent(
+                                    PlayPuzzleEvent.FailedToValidateGuess(
+                                        (result.throwable as NetworkException).error,
+                                    ),
+                                )
                             }
 
                             is Result.Success -> {
@@ -128,10 +132,10 @@ class PlayPuzzleViewModel(
                         mutableTileState.add(TileState.UnsubmittedGuess(event.letter))
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(
                             guessString = mutableTileState.toGuessString(),
-                            tileStatusString = mutableTileState.toTileStateString()
+                            tileStatusString = mutableTileState.toTileStateString(),
                         )
                         updatePuzzleInCache.execute(
-                            puzzleEntity
+                            puzzleEntity,
                         )
                     }
                 }
@@ -141,10 +145,13 @@ class PlayPuzzleViewModel(
                 if (event.isValidWord) {
                     viewModelScope.launch {
                         val originalPuzzleEntity = databaseOperations.getPuzzleById(puzzleId)
-                        updatePuzzleInCache.execute(originalPuzzleEntity.copy(numberOfGuesses = originalPuzzleEntity.numberOfGuesses + 1))
+                        updatePuzzleInCache
+                            .execute(
+                                originalPuzzleEntity
+                                    .copy(numberOfGuesses = originalPuzzleEntity.numberOfGuesses + 1),
+                            )
                     }
                 } else {
-
                 }
             }
         }

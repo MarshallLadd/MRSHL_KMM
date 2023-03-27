@@ -27,26 +27,30 @@ class PuzzleHistoryViewModel(
     private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 
     private val _state = MutableStateFlow(value = PuzzleHistoryState())
-    val state: MultiplatformStateFlow<PuzzleHistoryState> = combine(_state, databaseOperations.getAllPuzzlesAsFlow()) { state, puzzleList ->
-        if (state.puzzleHistoryList != puzzleList) {
-            var newList = puzzleList.map { it.toUIPuzzleHistoryEntity() }
-            if (state.listSortDirection == ListSortDirection.DESCENDING) {
-                newList = newList.reversed()
+    val state: MultiplatformStateFlow<PuzzleHistoryState> =
+        combine(
+            _state,
+            databaseOperations.getAllPuzzlesAsFlow(),
+        ) { state, puzzleList ->
+            if (state.puzzleHistoryList != puzzleList) {
+                var newList = puzzleList.map { it.toUIPuzzleHistoryEntity() }
+                if (state.listSortDirection == ListSortDirection.DESCENDING) {
+                    newList = newList.reversed()
+                }
+                newList = when (state.listFilterOption) {
+                    ListFilterOption.ALL -> newList
+                    ListFilterOption.COMPLETE -> newList.filter { it.completedDateString != null }
+                    ListFilterOption.INCOMPLETE -> newList.filter { it.completedDateString == null }
+                }
+                state.copy(
+                    puzzleHistoryList = newList,
+                )
+            } else {
+                state
             }
-            newList = when (state.listFilterOption) {
-                ListFilterOption.ALL -> newList
-                ListFilterOption.COMPLETE -> newList.filter { it.completedDateString != null }
-                ListFilterOption.INCOMPLETE -> newList.filter { it.completedDateString == null }
-            }
-            state.copy(
-                puzzleHistoryList = newList,
-            )
-        } else {
-            state
         }
-    }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PuzzleHistoryState())
-        .toMultiplatformStateFlow()
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PuzzleHistoryState())
+            .toMultiplatformStateFlow()
 
     fun onEvent(event: PuzzleHistoryEvent) {
         when (event) {

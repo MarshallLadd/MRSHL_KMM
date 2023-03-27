@@ -2,7 +2,6 @@ package me.pm.marshall.ladd.mrshl.presentation.loadingScreen
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -10,7 +9,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
-import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenEvent
@@ -74,13 +72,6 @@ class LoadingScreenViewModel(
                 }
                 cacheRemotePuzzles()
             }
-        }
-    }
-
-    private fun simulateCacheRemotePuzzles() {
-        viewModelScope.launch {
-            delay(2000)
-            onEvent(LoadingScreenEvent.FailedToGetPuzzles(error = NetworkError.SERVER_ERROR))
         }
     }
 

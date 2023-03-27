@@ -43,7 +43,7 @@ fun HistoryScreenBottomNavBar(
     val switchColors = SwitchDefaults.colors(
         checkedThumbColor = MaterialTheme.colors.goodLetterGoodPlaceBackground,
         checkedTrackColor = MaterialTheme.colors.goodLetterGoodPlaceBackground,
-        uncheckedThumbColor = MaterialTheme.colors.background
+        uncheckedThumbColor = MaterialTheme.colors.background,
     )
     BottomAppBar(
         contentPadding = WindowInsets.navigationBars.asPaddingValues(),

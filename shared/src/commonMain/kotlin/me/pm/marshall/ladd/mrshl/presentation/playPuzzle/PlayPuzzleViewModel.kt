@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.pm.marshall.ladd.mrshl.core.Result
+import me.pm.marshall.ladd.mrshl.core.constants.GameConstants
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
@@ -70,9 +71,10 @@ class PlayPuzzleViewModel(
                 viewModelScope.launch {
                     val mutableTileState = state.value.tileState.toMutableList()
                     if (
+                        state.value.numberOfGuesses < GameConstants.MAX_GUESSES &&
                         mutableTileState.size > 0 &&
-                        mutableTileState.lastIndex < (state.value.numberOfGuesses + 1) * 5 &&
-                        mutableTileState.lastIndex >= (state.value.numberOfGuesses) * 5
+                        mutableTileState.lastIndex < (state.value.numberOfGuesses + 1) * GameConstants.WORD_LENGTH &&
+                        mutableTileState.lastIndex >= (state.value.numberOfGuesses) * GameConstants.WORD_LENGTH
                     ) {
                         mutableTileState.removeLastOrNull()
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(
@@ -89,14 +91,15 @@ class PlayPuzzleViewModel(
             PlayPuzzleEvent.KeyboardEnterClicked -> {
                 viewModelScope.launch {
                     if (
+                        state.value.numberOfGuesses < GameConstants.MAX_GUESSES &&
                         state.value.tileState.isNotEmpty() &&
-                        state.value.tileState.size == (state.value.numberOfGuesses + 1) * 5 &&
+                        state.value.tileState.size == (state.value.numberOfGuesses + 1) * GameConstants.WORD_LENGTH &&
                         state.value.tileState
-                            .take(5)
+                            .take(GameConstants.WORD_LENGTH)
                             .all { it is TileState.UnsubmittedGuess }
                     ) {
                         val guessWord: String = state.value.tileState
-                            .takeLast(5)
+                            .takeLast(GameConstants.WORD_LENGTH)
                             .joinToString(separator = "") {
                                 it.letter.toString()
                             }
@@ -118,8 +121,9 @@ class PlayPuzzleViewModel(
                     val mutableTileState = state.value.tileState.toMutableList()
                     val numberOfGuesses = state.value.numberOfGuesses
                     if (
-                        mutableTileState.size < 30 &&
-                        mutableTileState.size / 5 == numberOfGuesses
+                        numberOfGuesses < GameConstants.MAX_GUESSES &&
+                        mutableTileState.size / GameConstants.WORD_LENGTH == numberOfGuesses &&
+                        mutableTileState.size < GameConstants.MAX_GUESS_STRING_LENGTH
                     ) {
                         mutableTileState.add(TileState.UnsubmittedGuess(event.letter))
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(

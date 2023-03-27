@@ -13,12 +13,12 @@ import me.pm.marshall.ladd.mrshl.core.database.sqlDelight.PuzzleDatabaseSqlDelig
 import me.pm.marshall.ladd.mrshl.core.network.HttpClientFactory
 import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiInterface
 import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiKtorImpl
-import me.pm.marshall.ladd.mrshl.core.network.guessCheck.GuessCheckInterface
-import me.pm.marshall.ladd.mrshl.core.network.guessCheck.GuessCheckInterfaceImpl
+import me.pm.marshall.ladd.mrshl.core.network.guessCheck.IsValidWordCheckInterface
+import me.pm.marshall.ladd.mrshl.core.network.guessCheck.IsValidWordCheckInterfaceImpl
 import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
-import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
-import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCache
-import me.pm.marshall.ladd.mrshl.domain.useCases.ValidateGuess
+import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemoteUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.IsValidWordCheckUseCase
 import javax.inject.Singleton
 
 @Module
@@ -60,8 +60,8 @@ object AppModule {
     fun providesCachePuzzlesFromRemoteUseCase(
         answersApiKtorImpl: PuzzlesApiInterface,
         database: PuzzleDatabaseOperations,
-    ): CachePuzzlesFromRemote {
-        return CachePuzzlesFromRemote(
+    ): CachePuzzlesFromRemoteUseCase {
+        return CachePuzzlesFromRemoteUseCase(
             answersApiKtorImpl,
             database,
         )
@@ -71,23 +71,23 @@ object AppModule {
     @Singleton
     fun providesUpdatePuzzleInCache(
         database: PuzzleDatabaseOperations,
-    ): UpdatePuzzleInCache {
-        return UpdatePuzzleInCache(database)
+    ): UpdatePuzzleInCacheUseCase {
+        return UpdatePuzzleInCacheUseCase(database)
     }
 
     @Provides
     @Singleton
     fun providesValidateGuess(
-        guessCheckInterface: GuessCheckInterface,
-    ): ValidateGuess {
-        return ValidateGuess(guessCheckInterface)
+        isValidWordCheckInterface: IsValidWordCheckInterface,
+    ): IsValidWordCheckUseCase {
+        return IsValidWordCheckUseCase(isValidWordCheckInterface)
     }
 
     @Provides
     @Singleton
     fun providesGuessCheckInterface(
         httpClient: HttpClient,
-    ): GuessCheckInterface {
-        return GuessCheckInterfaceImpl(httpClient)
+    ): IsValidWordCheckInterface {
+        return IsValidWordCheckInterfaceImpl(httpClient)
     }
 }

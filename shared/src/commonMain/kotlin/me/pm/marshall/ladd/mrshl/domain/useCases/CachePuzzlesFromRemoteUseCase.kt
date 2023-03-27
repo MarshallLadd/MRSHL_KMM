@@ -6,7 +6,7 @@ import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleDbEntity
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.core.network.answers.PuzzlesApiInterface
 
-class CachePuzzlesFromRemote(
+class CachePuzzlesFromRemoteUseCase(
     private val puzzleClient: PuzzlesApiInterface,
     private val databaseOperations: PuzzleDatabaseOperations,
 ) {

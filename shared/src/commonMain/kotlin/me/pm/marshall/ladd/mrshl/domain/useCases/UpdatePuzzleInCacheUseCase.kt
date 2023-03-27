@@ -4,7 +4,7 @@ import database.PuzzleEntity
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 
-class UpdatePuzzleInCache(
+class UpdatePuzzleInCacheUseCase(
     private val database: PuzzleDatabaseOperations,
 ) {
 

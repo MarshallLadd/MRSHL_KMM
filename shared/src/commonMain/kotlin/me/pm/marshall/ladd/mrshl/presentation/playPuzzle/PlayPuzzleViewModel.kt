@@ -13,8 +13,8 @@ import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
-import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCache
-import me.pm.marshall.ladd.mrshl.domain.useCases.ValidateGuess
+import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.IsValidWordCheckUseCase
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
 import me.pm.marshall.ladd.mrshl.presentation.core.toGuessString
 import me.pm.marshall.ladd.mrshl.presentation.core.toTileStateString
@@ -23,8 +23,8 @@ import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleState
 
 class PlayPuzzleViewModel(
     private val puzzleId: Long,
-    private val validateGuess: ValidateGuess,
-    private val updatePuzzleInCache: UpdatePuzzleInCache,
+    private val isValidWordCheckUseCase: IsValidWordCheckUseCase,
+    private val updatePuzzleInCacheUseCase: UpdatePuzzleInCacheUseCase,
     private val databaseOperations: PuzzleDatabaseOperations,
     private val coroutineScope: CoroutineScope?,
 ) {
@@ -81,7 +81,7 @@ class PlayPuzzleViewModel(
                             guessString = mutableTileState.toGuessString(),
                             tileStatusString = mutableTileState.toTileStateString(),
                         )
-                        updatePuzzleInCache.execute(
+                        updatePuzzleInCacheUseCase.execute(
                             puzzleEntity,
                         )
                     }
@@ -103,7 +103,7 @@ class PlayPuzzleViewModel(
                             .joinToString(separator = "") {
                                 it.letter.toString()
                             }
-                        when (val result = validateGuess.execute(guessWord)) {
+                        when (val result = isValidWordCheckUseCase.execute(guessWord)) {
                             is Result.Error -> {
                                 onEvent(
                                     PlayPuzzleEvent.FailedToValidateGuess(
@@ -134,7 +134,7 @@ class PlayPuzzleViewModel(
                             guessString = mutableTileState.toGuessString(),
                             tileStatusString = mutableTileState.toTileStateString(),
                         )
-                        updatePuzzleInCache.execute(
+                        updatePuzzleInCacheUseCase.execute(
                             puzzleEntity,
                         )
                     }
@@ -145,7 +145,7 @@ class PlayPuzzleViewModel(
                 if (event.isValidWord) {
                     viewModelScope.launch {
                         val originalPuzzleEntity = databaseOperations.getPuzzleById(puzzleId)
-                        updatePuzzleInCache
+                        updatePuzzleInCacheUseCase
                             .execute(
                                 originalPuzzleEntity
                                     .copy(numberOfGuesses = originalPuzzleEntity.numberOfGuesses + 1),

@@ -1,5 +1,5 @@
 package me.pm.marshall.ladd.mrshl.core.network.guessCheck
 
-interface GuessCheckInterface {
+interface IsValidWordCheckInterface {
     suspend fun isGuessValid(guess: String): Boolean
 }

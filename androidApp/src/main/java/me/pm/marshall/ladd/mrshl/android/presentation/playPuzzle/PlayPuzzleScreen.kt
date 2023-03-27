@@ -45,12 +45,12 @@ data class PlayPuzzleScreen(
                         )
                         return AndroidPlayPuzzleViewModel(
                             puzzleId = puzzleId,
-                            validateGuess = AppModule.providesValidateGuess(
+                            isValidWordCheckUseCase = AppModule.providesValidateGuess(
                                 AppModule.providesGuessCheckInterface(
                                     AppModule.providesAnswersHttpClient(),
                                 ),
                             ),
-                            updatePuzzleInCache = AppModule.providesUpdatePuzzleInCache(
+                            updatePuzzleInCacheUseCase = AppModule.providesUpdatePuzzleInCache(
                                 databaseOperations,
                             ),
                             databaseOperations = databaseOperations,

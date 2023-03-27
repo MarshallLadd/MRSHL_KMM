@@ -14,9 +14,9 @@ import me.pm.marshall.ladd.mrshl.core.network.NetworkError
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.core.network.guessCheck.model.GuessCheckResponseDTO
 
-class GuessCheckInterfaceImpl(
+class IsValidWordCheckInterfaceImpl(
     private val httpClient: HttpClient,
-) : GuessCheckInterface {
+) : IsValidWordCheckInterface {
     companion object {
         const val BASE_URL = "https://wordsapiv1.p.rapidapi.com/words/"
         const val API_HOST_STRING = "wordsapiv1.p.rapidapi.com"

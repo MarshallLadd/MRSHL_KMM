@@ -12,7 +12,7 @@ import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.mappers.toUIPuzzleHistoryEntity
-import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
+import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemoteUseCase
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.ListFilterOption
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.ListSortDirection
 import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryEvent
@@ -20,7 +20,7 @@ import me.pm.marshall.ladd.mrshl.presentation.puzzleHistory.model.PuzzleHistoryS
 
 class PuzzleHistoryViewModel(
     private val databaseOperations: PuzzleDatabaseOperations,
-    private val cachePuzzles: CachePuzzlesFromRemote,
+    private val cachePuzzles: CachePuzzlesFromRemoteUseCase,
     private val coroutineScope: CoroutineScope?,
 ) {
 

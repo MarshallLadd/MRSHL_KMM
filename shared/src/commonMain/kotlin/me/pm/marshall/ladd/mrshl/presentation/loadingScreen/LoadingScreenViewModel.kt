@@ -10,12 +10,12 @@ import kotlinx.coroutines.launch
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
-import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemote
+import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemoteUseCase
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenEvent
 import me.pm.marshall.ladd.mrshl.presentation.loadingScreen.model.LoadingScreenState
 
 class LoadingScreenViewModel(
-    private val cachePuzzles: CachePuzzlesFromRemote,
+    private val cachePuzzles: CachePuzzlesFromRemoteUseCase,
     private val coroutineScope: CoroutineScope?,
 ) {
 

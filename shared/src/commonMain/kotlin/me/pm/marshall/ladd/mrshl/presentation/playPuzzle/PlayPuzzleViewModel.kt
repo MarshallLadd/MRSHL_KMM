@@ -66,7 +66,11 @@ class PlayPuzzleViewModel(
             PlayPuzzleEvent.KeyboardDeleteClicked -> {
                 viewModelScope.launch {
                     val mutableTileState = state.value.tileState.toMutableList()
-                    if (mutableTileState.size > 0) {
+                    if (
+                        mutableTileState.size > 0 &&
+                        mutableTileState.lastIndex < (state.value.numberOfGuesses + 1) * 5 &&
+                        mutableTileState.lastIndex >= (state.value.numberOfGuesses) * 5
+                    ) {
                         mutableTileState.removeLastOrNull()
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(
                             guessString = mutableTileState.toGuessString(),

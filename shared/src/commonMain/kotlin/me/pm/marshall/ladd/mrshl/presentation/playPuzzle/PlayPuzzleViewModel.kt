@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
+import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCache
 import me.pm.marshall.ladd.mrshl.domain.useCases.ValidateGuess
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
@@ -44,7 +44,8 @@ class PlayPuzzleViewModel(
         ) { state, puzzle ->
             if (state.tileState != puzzle.guessList) {
                 state.copy(
-                    tileState = puzzle.guessList
+                    tileState = puzzle.guessList,
+                    numberOfGuesses = puzzle.numberOfGuesses.toInt()
                 )
             } else {
                 state
@@ -62,7 +63,9 @@ class PlayPuzzleViewModel(
 
     fun onEvent(event: PlayPuzzleEvent) {
         when (event) {
-            is PlayPuzzleEvent.FailedToValidateGuess -> TODO()
+            is PlayPuzzleEvent.FailedToValidateGuess -> {
+
+            }
             PlayPuzzleEvent.KeyboardDeleteClicked -> {
                 viewModelScope.launch {
                     val mutableTileState = state.value.tileState.toMutableList()
@@ -87,9 +90,9 @@ class PlayPuzzleViewModel(
                 viewModelScope.launch {
                     if (
                         state.value.tileState.isNotEmpty() &&
-                        state.value.tileState.size % 5 == 0 &&
+                        state.value.tileState.size == (state.value.numberOfGuesses + 1) * 5 &&
                         state.value.tileState
-                            .takeLast(5)
+                            .take(5)
                             .all { it is TileState.UnsubmittedGuess }
                     ) {
                         val guessWord: String = state.value.tileState
@@ -99,15 +102,11 @@ class PlayPuzzleViewModel(
                             }
                         when (val result = validateGuess.execute(guessWord)) {
                             is Result.Error -> {
-
+                                onEvent(PlayPuzzleEvent.FailedToValidateGuess((result.throwable as NetworkException).error))
                             }
 
                             is Result.Success -> {
-                                if (result.data) {
-                                    _state.update {
-                                        it.copy(numberOfGuesses = it.numberOfGuesses + 1)
-                                    }
-                                }
+                                onEvent(PlayPuzzleEvent.ReceivedGuessValidationResult(isValidWord = result.data))
                             }
                         }
                     }
@@ -117,9 +116,10 @@ class PlayPuzzleViewModel(
             is PlayPuzzleEvent.KeyboardLetterClicked -> {
                 viewModelScope.launch {
                     val mutableTileState = state.value.tileState.toMutableList()
+                    val numberOfGuesses = state.value.numberOfGuesses
                     if (
                         mutableTileState.size < 30 &&
-                        mutableTileState.size / 5 == state.value.numberOfGuesses
+                        mutableTileState.size / 5 == numberOfGuesses
                     ) {
                         mutableTileState.add(TileState.UnsubmittedGuess(event.letter))
                         val puzzleEntity = databaseOperations.getPuzzleById(puzzleId).copy(
@@ -133,7 +133,16 @@ class PlayPuzzleViewModel(
                 }
             }
 
-            is PlayPuzzleEvent.ReceivedGuessValidationResult -> TODO()
+            is PlayPuzzleEvent.ReceivedGuessValidationResult -> {
+                if (event.isValidWord) {
+                    viewModelScope.launch {
+                        val originalPuzzleEntity = databaseOperations.getPuzzleById(puzzleId)
+                        updatePuzzleInCache.execute(originalPuzzleEntity.copy(numberOfGuesses = originalPuzzleEntity.numberOfGuesses + 1))
+                    }
+                } else {
+
+                }
+            }
         }
     }
 }

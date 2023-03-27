@@ -3,7 +3,7 @@ CREATE TABLE puzzleEntity(
     answer TEXT NOT NULL,
     guessString TEXT,
     tileStatusString TEXT,
-    numberOfGuesses INTEGER,
+    numberOfGuesses INTEGER NOT NULL,
     puzzleDate INTEGER NOT NULL,
     completedDate INTEGER
 );

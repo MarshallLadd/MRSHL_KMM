@@ -33,14 +33,17 @@ class PuzzleHistoryViewModel(
             databaseOperations.getAllPuzzlesAsFlow(),
         ) { state, puzzleList ->
             if (state.puzzleHistoryList != puzzleList) {
-                var newList = puzzleList.map { it.toUIPuzzleHistoryEntity() }
+                var newList = puzzleList
+                    .map {
+                        it.toUIPuzzleHistoryEntity()
+                    }
                 if (state.listSortDirection == ListSortDirection.DESCENDING) {
                     newList = newList.reversed()
                 }
                 newList = when (state.listFilterOption) {
                     ListFilterOption.ALL -> newList
-                    ListFilterOption.COMPLETE -> newList.filter { it.completedDateString != null }
-                    ListFilterOption.INCOMPLETE -> newList.filter { it.completedDateString == null }
+                    ListFilterOption.COMPLETE -> newList.filter { !it.completedDateString.isNullOrBlank() }
+                    ListFilterOption.INCOMPLETE -> newList.filter { it.completedDateString.isNullOrBlank() }
                 }
                 state.copy(
                     puzzleHistoryList = newList,

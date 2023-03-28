@@ -4,13 +4,10 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import database.PuzzleEntity
-import kotlinx.coroutines.flow.map
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformFlow
-import me.pm.marshall.ladd.mrshl.core.mappers.toPuzzleForPlay
 import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
-import me.pm.marshall.ladd.mrshl.presentation.core.PuzzleForPlay
 
 class PuzzleDatabaseSqlDelightImpl(
     database: MrshlDatabase,
@@ -18,26 +15,18 @@ class PuzzleDatabaseSqlDelightImpl(
 
     private val queries = database.mrshlQueries
 
-    override fun getAllPuzzlesAsFlow(): MultiplatformFlow<List<PuzzleForPlay>> {
+    override fun getAllPuzzlesAsFlow(): MultiplatformFlow<List<PuzzleEntity>> {
         return queries
             .getAllPuzzles()
             .asFlow()
             .mapToList()
-            .map {
-                it.map { puzzleEntity ->
-                    puzzleEntity.toPuzzleForPlay()
-                }
-            }
             .toMultiplatformFlow()
     }
 
-    override fun getAllPuzzlesAsList(): List<PuzzleForPlay> {
+    override fun getAllPuzzlesAsList(): List<PuzzleEntity> {
         return queries
             .getAllPuzzles()
             .executeAsList()
-            .map { puzzleEntity ->
-                puzzleEntity.toPuzzleForPlay()
-            }
     }
 
     override fun getAllUnplayedPuzzlesAsList(): List<PuzzleEntity> {
@@ -46,12 +35,11 @@ class PuzzleDatabaseSqlDelightImpl(
             .executeAsList()
     }
 
-    override fun getPuzzleByIdAsFlow(requestedId: Long): MultiplatformFlow<PuzzleForPlay> {
+    override fun getPuzzleByIdAsFlow(requestedId: Long): MultiplatformFlow<PuzzleEntity> {
         return queries
             .getPuzzleById(requestedId)
             .asFlow()
             .mapToOne()
-            .map { it.toPuzzleForPlay() }
             .toMultiplatformFlow()
     }
 

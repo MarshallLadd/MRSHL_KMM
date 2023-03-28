@@ -13,6 +13,7 @@ import me.pm.marshall.ladd.mrshl.core.constants.GameConstants
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
+import me.pm.marshall.ladd.mrshl.core.mappers.getTileStateList
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
 import me.pm.marshall.ladd.mrshl.domain.useCases.CheckGuessVsActual
 import me.pm.marshall.ladd.mrshl.domain.useCases.IsValidWordCheckUseCase
@@ -46,11 +47,11 @@ class PlayPuzzleViewModel(
             databaseOperations
                 .getPuzzleByIdAsFlow(puzzleId),
         ) { state, puzzle ->
-            if (state.tileState != puzzle.guessList) {
+            if (state.tileState != (puzzle.getTileStateList())) {
                 state.copy(
-                    tileState = puzzle.guessList,
+                    tileState = puzzle.getTileStateList(),
                     numberOfGuesses = puzzle.numberOfGuesses.toInt(),
-                    puzzleComplete = !puzzle.completedDateString.isNullOrBlank()
+                    puzzleComplete = puzzle.completedDate != null
                 )
             } else {
                 state

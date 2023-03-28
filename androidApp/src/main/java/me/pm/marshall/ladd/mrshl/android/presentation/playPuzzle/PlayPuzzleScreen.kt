@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
 package me.pm.marshall.ladd.mrshl.android.presentation.playPuzzle
 
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -54,6 +51,7 @@ data class PlayPuzzleScreen(
                                 databaseOperations,
                             ),
                             databaseOperations = databaseOperations,
+                            guessVsActual = AppModule.providesCheckGuessVsActual()
                         ) as T
                     }
                 },
@@ -79,13 +77,19 @@ data class PlayPuzzleScreen(
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     onLetterPress = {
-                        viewModel.onEvent(PlayPuzzleEvent.KeyboardLetterClicked(letter = it))
+                        if (!state.puzzleComplete) {
+                            viewModel.onEvent(PlayPuzzleEvent.KeyboardLetterClicked(letter = it))
+                        }
                     },
                     onDeletePress = {
-                        viewModel.onEvent(PlayPuzzleEvent.KeyboardDeleteClicked)
+                        if (!state.puzzleComplete) {
+                            viewModel.onEvent(PlayPuzzleEvent.KeyboardDeleteClicked)
+                        }
                     },
                     onEnterPress = {
-                        viewModel.onEvent(PlayPuzzleEvent.KeyboardEnterClicked)
+                        if (!state.puzzleComplete) {
+                            viewModel.onEvent(PlayPuzzleEvent.KeyboardEnterClicked)
+                        }
                     },
                 )
             }

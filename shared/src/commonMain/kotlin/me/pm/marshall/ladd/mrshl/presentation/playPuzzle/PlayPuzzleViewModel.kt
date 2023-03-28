@@ -7,14 +7,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import me.pm.marshall.ladd.mrshl.core.Result
 import me.pm.marshall.ladd.mrshl.core.constants.GameConstants
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.flows.toMultiplatformStateFlow
 import me.pm.marshall.ladd.mrshl.core.network.NetworkException
-import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.CheckGuessVsActual
 import me.pm.marshall.ladd.mrshl.domain.useCases.IsValidWordCheckUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
 import me.pm.marshall.ladd.mrshl.presentation.core.TileState
 import me.pm.marshall.ladd.mrshl.presentation.core.toGuessString
 import me.pm.marshall.ladd.mrshl.presentation.core.toTileStateString
@@ -24,6 +26,7 @@ import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleState
 class PlayPuzzleViewModel(
     private val puzzleId: Long,
     private val isValidWordCheckUseCase: IsValidWordCheckUseCase,
+    private val guessVsActual: CheckGuessVsActual,
     private val updatePuzzleInCacheUseCase: UpdatePuzzleInCacheUseCase,
     private val databaseOperations: PuzzleDatabaseOperations,
     private val coroutineScope: CoroutineScope?,
@@ -47,6 +50,7 @@ class PlayPuzzleViewModel(
                 state.copy(
                     tileState = puzzle.guessList,
                     numberOfGuesses = puzzle.numberOfGuesses.toInt(),
+                    puzzleComplete = !puzzle.completedDateString.isNullOrBlank()
                 )
             } else {
                 state
@@ -95,14 +99,11 @@ class PlayPuzzleViewModel(
                         state.value.tileState.isNotEmpty() &&
                         state.value.tileState.size == (state.value.numberOfGuesses + 1) * GameConstants.WORD_LENGTH &&
                         state.value.tileState
-                            .take(GameConstants.WORD_LENGTH)
+                            .takeLast(GameConstants.WORD_LENGTH)
                             .all { it is TileState.UnsubmittedGuess }
                     ) {
                         val guessWord: String = state.value.tileState
-                            .takeLast(GameConstants.WORD_LENGTH)
-                            .joinToString(separator = "") {
-                                it.letter.toString()
-                            }
+                            .takeLast(GameConstants.WORD_LENGTH).toGuessString()
                         when (val result = isValidWordCheckUseCase.execute(guessWord)) {
                             is Result.Error -> {
                                 onEvent(
@@ -144,12 +145,31 @@ class PlayPuzzleViewModel(
             is PlayPuzzleEvent.ReceivedGuessValidationResult -> {
                 if (event.isValidWord) {
                     viewModelScope.launch {
-                        val originalPuzzleEntity = databaseOperations.getPuzzleById(puzzleId)
+                        val originalPuzzleEntity = databaseOperations
+                            .getPuzzleById(puzzleId)
+                        val guessWord = state.value.tileState
+                            .takeLast(GameConstants.WORD_LENGTH)
+                            .toGuessString()
+                        val guessCompareResult =
+                            guessVsActual.execute(originalPuzzleEntity.answer, guessWord)
+                        val completedDate: Long? =
+                            if (guessCompareResult.all { it is TileState.GoodGuess }) {
+                                Clock.System.now().epochSeconds
+                            } else {
+                                null
+                            }
                         updatePuzzleInCacheUseCase
                             .execute(
                                 originalPuzzleEntity
-                                    .copy(numberOfGuesses = originalPuzzleEntity.numberOfGuesses + 1),
+                                    .copy(
+                                        numberOfGuesses = originalPuzzleEntity.numberOfGuesses + 1,
+                                        tileStatusString = originalPuzzleEntity.tileStatusString
+                                            ?.dropLast(GameConstants.WORD_LENGTH)
+                                            ?.plus(guessCompareResult.toTileStateString()),
+                                        completedDate = completedDate
+                                    ),
                             )
+
                     }
                 } else {
                 }

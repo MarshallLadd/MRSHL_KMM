@@ -17,8 +17,9 @@ import me.pm.marshall.ladd.mrshl.core.network.guessCheck.IsValidWordCheckInterfa
 import me.pm.marshall.ladd.mrshl.core.network.guessCheck.IsValidWordCheckInterfaceImpl
 import me.pm.marshall.ladd.mrshl.database.MrshlDatabase
 import me.pm.marshall.ladd.mrshl.domain.useCases.CachePuzzlesFromRemoteUseCase
-import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.CheckGuessVsActual
 import me.pm.marshall.ladd.mrshl.domain.useCases.IsValidWordCheckUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
 import javax.inject.Singleton
 
 @Module
@@ -29,6 +30,12 @@ object AppModule {
     @Singleton
     fun providesBaseApplicationContext(): Context {
         return BaseApplication.INSTANCE
+    }
+
+    @Provides
+    @Singleton
+    fun providesCheckGuessVsActual() : CheckGuessVsActual {
+        return CheckGuessVsActual()
     }
 
     @Provides

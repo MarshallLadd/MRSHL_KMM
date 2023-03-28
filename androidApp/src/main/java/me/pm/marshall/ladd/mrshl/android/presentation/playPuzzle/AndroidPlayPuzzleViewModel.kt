@@ -7,8 +7,9 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import me.pm.marshall.ladd.mrshl.core.database.PuzzleDatabaseOperations
 import me.pm.marshall.ladd.mrshl.core.flows.MultiplatformStateFlow
-import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.CheckGuessVsActual
 import me.pm.marshall.ladd.mrshl.domain.useCases.IsValidWordCheckUseCase
+import me.pm.marshall.ladd.mrshl.domain.useCases.UpdatePuzzleInCacheUseCase
 import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.PlayPuzzleViewModel
 import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleEvent
 import me.pm.marshall.ladd.mrshl.presentation.playPuzzle.model.PlayPuzzleState
@@ -17,6 +18,7 @@ class AndroidPlayPuzzleViewModel @AssistedInject constructor(
     @Assisted private val puzzleId: Long,
     private val isValidWordCheckUseCase: IsValidWordCheckUseCase,
     private val updatePuzzleInCacheUseCase: UpdatePuzzleInCacheUseCase,
+    private val guessVsActual: CheckGuessVsActual,
     private val databaseOperations: PuzzleDatabaseOperations,
 ) : ViewModel() {
 
@@ -25,6 +27,7 @@ class AndroidPlayPuzzleViewModel @AssistedInject constructor(
             puzzleId = puzzleId,
             isValidWordCheckUseCase = isValidWordCheckUseCase,
             updatePuzzleInCacheUseCase = updatePuzzleInCacheUseCase,
+            guessVsActual = guessVsActual,
             databaseOperations = databaseOperations,
             coroutineScope = viewModelScope,
         )

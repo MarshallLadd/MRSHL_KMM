@@ -7,6 +7,7 @@ data class PlayPuzzleState(
     val puzzleId: Long,
     val tileState: List<TileState>,
     val numberOfGuesses: Int = 0,
+    val puzzleComplete: Boolean = false,
     val networkBusy: Boolean = false,
     val error: NetworkError? = null,
 )
